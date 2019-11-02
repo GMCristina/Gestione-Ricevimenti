@@ -89,13 +89,15 @@
     <Folder Include="Resources\drawable-xhdpi\" />
     <Folder Include="Resources\drawable-xxhdpi\" />
     <Folder Include="Resources\drawable-xxxhdpi\" />
-    <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Gestione_Ricevimenti\Gestione_Ricevimenti.csproj">
-      <Project>{2513FA62-4A7F-4EF5-8FD1-5905BE4FF28D}</Project>
-      <Name>Gestione_Ricevimenti</Name>
+    <ProjectReference Include="..\Gestione Ricevimenti\Gestione Ricevimenti.csproj">
+      <Project>{46252ba4-6cea-43ea-858a-3106a47adebc}</Project>
+      <Name>Gestione Ricevimenti</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\logounivpmr.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

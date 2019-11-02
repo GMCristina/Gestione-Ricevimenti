@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Gestione_Ricevimenti"
+             x:Class="Gestione_Ricevimenti.LoginPage">
+
+    <StackLayout
+        VerticalOptions="LayoutOptions.Center"
+        HorizontalOptions="FillAndExpand"
+        Orientation="Vertical"
+        Spacing="10">
+        <Image Source="logounivpmr.png" Aspect="AspectFit" HorizontalOptions="Center"/>
+        <Entry x:Name="username"
+            Placeholder="Matricola"
+            HorizontalOptions="Center"
+            WidthRequest="250"/>
+        <Entry x:Name="password"
+           Placeholder="Password" 
+           IsPassword="True" 
+           HorizontalOptions="Center"
+           WidthRequest="250"/>
+        <Button Text="Accedi" 
+           HorizontalOptions="EndAndExpand" 
+           />
+    </StackLayout>
+
+</ContentPage>

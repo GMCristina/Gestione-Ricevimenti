@@ -7,9 +7,9 @@ using Xamarin.Forms;
 
 namespace Gestione_Ricevimenti
 {
-    public partial class MainPage : ContentPage
+    public partial class LoginPage : ContentPage
     {
-        public MainPage()
+        public LoginPage()
         {
             InitializeComponent();
         }
