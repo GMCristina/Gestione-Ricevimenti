@@ -9,7 +9,7 @@ using Android.OS;
 
 namespace Gestione_Ricevimenti.Droid
 {
-    [Activity(Label = "Gestione_Ricevimenti", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "Gestione Ricevimenti", Icon = "@mipmap/ic_launcher_logo3_round", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)

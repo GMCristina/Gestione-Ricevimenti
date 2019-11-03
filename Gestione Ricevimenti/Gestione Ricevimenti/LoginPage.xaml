@@ -5,11 +5,17 @@
              x:Class="Gestione_Ricevimenti.LoginPage">
 
     <StackLayout
-        VerticalOptions="LayoutOptions.Center"
+        VerticalOptions="StartAndExpand"
         HorizontalOptions="FillAndExpand"
+        Margin="50"
+      
         Orientation="Vertical"
         Spacing="10">
-        <Image Source="logounivpmr.png" Aspect="AspectFit" HorizontalOptions="Center"/>
+        <Image Source="logounivpmr.png" 
+               Aspect="AspectFit" 
+               WidthRequest="225"
+               HeightRequest="80"
+               HorizontalOptions="Center"/>
         <Entry x:Name="username"
             Placeholder="Matricola"
             HorizontalOptions="Center"
@@ -21,6 +27,8 @@
            WidthRequest="250"/>
         <Button Text="Accedi" 
            HorizontalOptions="EndAndExpand" 
+                BackgroundColor="Accent"
+                TextColor="White"
            />
     </StackLayout>
 

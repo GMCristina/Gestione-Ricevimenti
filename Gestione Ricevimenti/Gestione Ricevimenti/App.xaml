@@ -3,6 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Gestione_Ricevimenti.App">
     <Application.Resources>
-
+        <Color x:Key="colorPrimary">#C1092A</Color>
+        <Color x:Key="colorPrimaryDark">#9A0722</Color>
+        <Color x:Key="colorAccent">#C1092A</Color>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="BackgroundColor"
+                    Value="{StaticResource colorPrimary}"/>
+            <Setter Property="TextColor"
+                    Value="White"/>
+        </Style>
+   
     </Application.Resources>
 </Application>
