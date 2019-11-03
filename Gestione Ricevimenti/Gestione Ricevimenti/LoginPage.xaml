@@ -2,13 +2,14 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Gestione_Ricevimenti"
-             x:Class="Gestione_Ricevimenti.LoginPage">
+             x:Class="Gestione_Ricevimenti.LoginPage"
+             Title="Gestione Ricevimenti">
+    
 
     <StackLayout
         VerticalOptions="StartAndExpand"
         HorizontalOptions="FillAndExpand"
         Margin="50"
-      
         Orientation="Vertical"
         Spacing="10">
         <Image Source="logounivpmr.png" 
@@ -29,6 +30,7 @@
            HorizontalOptions="EndAndExpand" 
                 BackgroundColor="Accent"
                 TextColor="White"
+                Clicked="LoginButtonClicked"
            />
     </StackLayout>
 
