@@ -14,7 +14,32 @@ namespace Gestione_Ricevimenti
 	{
 		public StudentHomePage ()
 		{
-			InitializeComponent ();
-		}
-	}
+           // NavigationPage.SetHasBackButton(this, false);
+           
+           
+            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti.php?");
+            request.DownloadEvent();
+
+            InitializeComponent ();
+
+            ToolbarItems.Add(new ToolbarItem
+            {
+                Text = "Prova",
+                 Order = ToolbarItemOrder.Primary,
+
+            });
+            
+          
+
+
+          
+               // Navigation.RemovePage(Navigation.NavigationStack[0]);
+            
+        }
+
+        public void fillListStudentHomePage(List<RicevimentoHomePageResp> l)
+        {
+            ricevimenti.ItemsSource = l;
+        }
+    }
 }

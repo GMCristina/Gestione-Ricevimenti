@@ -12,7 +12,26 @@ namespace Gestione_Ricevimenti
     {
         public LoginPage()
         {
-            InitializeComponent();
+            if (Application.Current.Properties.ContainsKey("id_utente"))
+            {
+               
+                switch (Application.Current.Properties["tipo_utente"].ToString())
+                {
+                    case "s":
+                       //Navigation.InsertPageBefore(new StudentHomePage(), this);
+                       // Navigation.PopAsync();
+                        Navigation.PushAsync(new StudentHomePage());
+                        break;
+                    case "p":
+                        Navigation.PushAsync(new ProfHomePage());
+                        break;
+                }
+
+            }
+            else
+            {
+                InitializeComponent();
+            }
         }
 
         private void LoginButtonClicked(object sender, EventArgs e)
@@ -35,6 +54,7 @@ namespace Gestione_Ricevimenti
             {
                 case "s":
                     Navigation.PushAsync(new StudentHomePage());
+                   // Navigation.RemovePage(this);
                     break;
                 case "p":
                     Navigation.PushAsync(new ProfHomePage());

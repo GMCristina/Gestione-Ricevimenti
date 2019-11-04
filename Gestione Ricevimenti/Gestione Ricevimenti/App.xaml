@@ -6,6 +6,8 @@
         <Color x:Key="colorPrimary">#C1092A</Color>
         <Color x:Key="colorPrimaryDark">#9A0722</Color>
         <Color x:Key="colorAccent">#C1092A</Color>
+        <Color x:Key="Grigio">#F3F3F3</Color>
+        
         <Style TargetType="{x:Type Button}">
             <Setter Property="BackgroundColor"
                     Value="{StaticResource colorPrimary}"/>

@@ -3,9 +3,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Gestione_Ricevimenti.StudentHomePage"
              Title="Gestione Ricevimenti">
+
+    
     <ContentPage.Content>
-        <StackLayout>
-           
+        
+        <StackLayout
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand">
+            <ListView x:Name="ricevimenti"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+                      HasUnevenRows="True"
+                BindingContext="RicevimentoHomePageResp">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout HorizontalOptions="StartAndExpand" Orientation="Vertical">
+                                <Label x:Name="DataLabel" Text="{Binding giorno}" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" FontSize="20" FontAttributes="Bold" TextColor="Black" BackgroundColor="{StaticResource Grigio}"/>
+                                <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="FillAndExpand" Orientation="Horizontal">
+                                    <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Orientation="Vertical" Spacing="10">
+                                        <Label x:Name="NomeLabel" Text="{Binding nome}" HorizontalOptions="Start" VerticalOptions="FillAndExpand" FontSize="15"  TextColor="Gray" />
+                                        <Label x:Name="OraLabel" Text="{Binding inizio}" HorizontalOptions="Start" VerticalOptions="FillAndExpand" FontSize="15"  TextColor="Gray" />
+                                    </StackLayout>
+                                    <Button x:Name="btn" HorizontalOptions="End" Text="Btn"/>
+                                </StackLayout>
+            
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
