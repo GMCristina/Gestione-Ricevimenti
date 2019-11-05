@@ -12,30 +12,9 @@ namespace Gestione_Ricevimenti
     {
         public LoginPage()
         {
-            // NavigationPage.SetHasNavigationBar(this, false);
 
-            /* if (Application.Current.Properties.ContainsKey("id_utente"))
-            {
-               
-                switch (Application.Current.Properties["tipo_utente"].ToString())
-                {
-                    case "s":
-                        //Navigation.InsertPageBefore(new StudentHomePage(), this);
-                        // Navigation.PopAsync();
-                        Navigation.PushAsync( new StudentHomePage());
-                        break;
-                    case "p":
-                        Navigation.PushAsync(new ProfHomePage());
-                        break;
-                }
-
-            }
-            else
-            {
-                InitializeComponent();
-            }
-            */
             InitializeComponent();
+
         }
 
         private void LoginButtonClicked(object sender, EventArgs e)
@@ -53,15 +32,19 @@ namespace Gestione_Ricevimenti
             Application.Current.Properties["tipo_utente"] = u.tipo;
             Application.Current.Properties["matricola"] = username.Text;
             Application.Current.Properties["password"] = password.Text;
-            // Debug.WriteLine(Application.Current.Properties["id_utente"].ToString() + "/" + Application.Current.Properties["tipo_utente"].ToString() + "/" + Application.Current.Properties["matricola"].ToString() + "/" + Application.Current.Properties["password"].ToString());
+            Application.Current.SavePropertiesAsync();
+
             switch (Application.Current.Properties["tipo_utente"].ToString())
             {
                 case "s":
+                    // Navigation.PushModalAsync(new StudentHomePage());
                     Navigation.PushAsync(new StudentHomePage());
-                   // Navigation.RemovePage(this);
+                    Navigation.RemovePage(this);
+
                     break;
                 case "p":
                     Navigation.PushAsync(new ProfHomePage());
+                    Navigation.RemovePage(this);
                     break;
                 
            

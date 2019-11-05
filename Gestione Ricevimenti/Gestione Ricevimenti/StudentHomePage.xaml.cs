@@ -49,19 +49,24 @@ namespace Gestione_Ricevimenti
             Application.Current.Properties.Remove("tipo_utente");
             Application.Current.Properties.Remove("matricola");
             Application.Current.Properties.Remove("password");
+            //await Navigation.PopAsync();
 
-            await this.Navigation.PushAsync(new LoginPage());
+            
+            await Navigation.PushAsync( new LoginPage());
+            Navigation.RemovePage(this);
+            
 
+            // await Navigation.PushModalAsync(new LoginPage());
         }
 
         protected async void Home(object sender, EventArgs e)
         {
-            await this.Navigation.PushAsync(new StudentHomePage());
+           
         }
 
         protected async void Info(object sender, EventArgs e)
         {
-            await this.Navigation.PushAsync(new InfoPage());
+            await Navigation.PushAsync(new InfoPage());
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Gestione_Ricevimenti
         {
             InitializeComponent();
 
-            if (Application.Current.Properties.ContainsKey("id_utente"))
+            if (!Application.Current.Properties.ContainsKey("id_utente"))
             {
                 MainPage = new NavigationPage(new LoginPage());
             }
@@ -21,10 +21,10 @@ namespace Gestione_Ricevimenti
                 {
                     case "s":
                     
-                        MainPage = new StudentHomePage();
+                        MainPage = new NavigationPage(new StudentHomePage());
                         break;
                     case "p":
-                        MainPage = new ProfHomePage();
+                        MainPage = new NavigationPage ( new ProfHomePage());
                         break;
                 }
             }
