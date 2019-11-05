@@ -68,13 +68,13 @@ namespace Gestione_Ricevimenti
             if (response.IsSuccessStatusCode)
             {
                 var result = response.Content.ReadAsStringAsync().Result;
-                Dictionary<string, RicevimentoHomePageResp> result_event = JsonConvert.DeserializeObject<Dictionary<string, RicevimentoHomePageResp>>(result);
-                List<RicevimentoHomePageResp> events = new List<RicevimentoHomePageResp>();
+                Dictionary<string, RicevimentoHomePage> result_event = JsonConvert.DeserializeObject<Dictionary<string, RicevimentoHomePage>>(result);
+                List<RicevimentoHomePage> events = new List<RicevimentoHomePage>();
 
-                foreach (KeyValuePair<string, RicevimentoHomePageResp> elem in result_event)
+                foreach (KeyValuePair<string, RicevimentoHomePage> elem in result_event)
                 {
                  
-                    events.Add(new RicevimentoHomePageResp(elem.Value.id_ricevimento, elem.Value.nome, elem.Value.cognome, elem.Value.giorno, elem.Value.inizio, elem.Value.fine, elem.Value.corso, elem.Value.stato));
+                    events.Add(new RicevimentoHomePage(elem.Value.id_ricevimento, elem.Value.nome, elem.Value.cognome, elem.Value.giorno, elem.Value.inizio, elem.Value.fine, elem.Value.corso, elem.Value.stato));
                 }
                 ((StudentHomePage)mainPage).fillListStudentHomePage(events);
             }

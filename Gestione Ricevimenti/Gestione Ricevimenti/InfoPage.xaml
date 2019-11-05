@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Gestione_Ricevimenti.InfoPage"
+             Title="Gestione Ricevimenti" >
+             
+    <StackLayout Padding = "7,7,7,3" >
+        
+    <Image HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" 
+                   Source="logounivpmr" Aspect="AspectFit" 
+                   WidthRequest="225" HeightRequest="80"/>
+    <Label HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Text="Sviluppatori : "/>
+    <Label HorizontalOptions="Center" VerticalOptions="StartAndExpand" Text="Manuel Manelli" />
+    <Label HorizontalOptions="Center" VerticalOptions="StartAndExpand" Text="Maria Cristina Giannini "/>
+    <Label HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Text="Contatti : "/>
+    <Label HorizontalOptions="Center" VerticalOptions="StartAndExpand" Text="s1077802@studenti.univpm.it"/>
+    <Label HorizontalOptions="Center" VerticalOptions="StartAndExpand" Text="s1077586@studenti.univpm.it"/>
+    <Label HorizontalOptions="Center" VerticalOptions="StartAndExpand" Text="  Quest'applicazione è stata sviluppata per il corso di Programmazione Mobile" HorizontalTextAlignment="Center"/>
+    <Image HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"
+                   Source="iu"  Aspect="AspectFit" 
+                   WidthRequest="90" HeightRequest="60"/>
+    <Label HorizontalOptions="Center" VerticalOptions="StartAndExpand" Text="Dipartimento d'Ingegneria dell'Informazione"/>
+        
+    </StackLayout>
+       
+    </ContentPage>

@@ -4,28 +4,42 @@
              x:Class="Gestione_Ricevimenti.StudentHomePage"
              Title="Gestione Ricevimenti">
 
-    
-    <ContentPage.Content>
-        
-        <StackLayout
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Logout" Order="Secondary" Clicked="Logout">
+            <ToolbarItem.Icon>
+                <OnPlatform x:DataType="FileImageSource" Android="ic_exit_to_app_black_24dp.xml"/>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+        <ToolbarItem Text="Home" Order="Primary" Clicked="Home">
+            <ToolbarItem.Icon>
+                <OnPlatform x:DataType="FileImageSource" Android="ic_home_black_24dp.xml"/>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+        <ToolbarItem Text="Info" Order="Secondary" Clicked="Info" >
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+
+    <StackLayout
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand">
             <ListView x:Name="ricevimenti"
                 HorizontalOptions="FillAndExpand"
                 VerticalOptions="FillAndExpand"
-                      HasUnevenRows="True"
-                BindingContext="RicevimentoHomePageResp">
+                HasUnevenRows="True"
+                BindingContext="RicevimentoHomePageResp"
+               >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout HorizontalOptions="StartAndExpand" Orientation="Vertical">
-                                <Label x:Name="DataLabel" Text="{Binding giorno}" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" FontSize="20" FontAttributes="Bold" TextColor="Black" BackgroundColor="{StaticResource Grigio}"/>
-                                <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="FillAndExpand" Orientation="Horizontal">
-                                    <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" Orientation="Vertical" Spacing="10">
-                                        <Label x:Name="NomeLabel" Text="{Binding nome}" HorizontalOptions="Start" VerticalOptions="FillAndExpand" FontSize="15"  TextColor="Gray" />
-                                        <Label x:Name="OraLabel" Text="{Binding inizio}" HorizontalOptions="Start" VerticalOptions="FillAndExpand" FontSize="15"  TextColor="Gray" />
+                        <StackLayout HorizontalOptions="Fill" Orientation="Vertical">
+                                <Label x:Name="DataLabel" Text="{Binding giorno}" HorizontalOptions="Fill" VerticalOptions="StartAndExpand" FontSize="Medium" TextColor="Black" BackgroundColor="{StaticResource Grigio}"/>
+                                <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Orientation="Horizontal" Padding="10,0">
+                                    <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Fill" Orientation="Vertical" >
+                                        <Label x:Name="NomeLabel" Text="{Binding nome_cognome}" HorizontalOptions="StartAndExpand"  FontSize="Small"  TextColor="Gray" />
+                                        <Label x:Name="OraLabel" Text="{Binding inizio_fine}" HorizontalOptions="StartAndExpand" FontSize="Small"  TextColor="Gray" />
                                     </StackLayout>
-                                    <Button x:Name="btn" HorizontalOptions="End" Text="Btn"/>
+                                    <Button x:Name="btn" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="Transparent" Text="{Binding stato_stringa}" FontAttributes="Italic" TextColor="{StaticResource colorPrimary}"/>
                                 </StackLayout>
             
                         </StackLayout>
@@ -34,5 +48,5 @@
             </ListView.ItemTemplate>
             </ListView>
         </StackLayout>
-    </ContentPage.Content>
+    
 </ContentPage>

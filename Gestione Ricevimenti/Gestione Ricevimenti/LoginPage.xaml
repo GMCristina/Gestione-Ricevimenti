@@ -3,24 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Gestione_Ricevimenti"
              x:Class="Gestione_Ricevimenti.LoginPage"
-             Title="Gestione Ricevimenti">
+             Title="Gestione Ricevimenti"
+            >
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Logout" Order="Secondary" >
-            <ToolbarItem.Icon>
-                <OnPlatform x:DataType="FileImageSource" Android="ic_exit_to_app_black_24dp.xml"/>
-            </ToolbarItem.Icon>
-        </ToolbarItem>
-        <ToolbarItem Text="Home" Order="Primary" >
-            <ToolbarItem.Icon>
-                <OnPlatform x:DataType="FileImageSource" Android="ic_home_black_24dp.xml"/>
-            </ToolbarItem.Icon>
-        </ToolbarItem>
-        <ToolbarItem Text="Info" Order="Default" >
-            <ToolbarItem.Icon>
-                <OnPlatform x:DataType="FileImageSource" Android="ic_info_outline_black_24dp.xml"/>
-            </ToolbarItem.Icon>
-        </ToolbarItem>
     </ContentPage.ToolbarItems>
 
 

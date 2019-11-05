@@ -11,7 +11,23 @@ namespace Gestione_Ricevimenti
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new LoginPage());
+            if (Application.Current.Properties.ContainsKey("id_utente"))
+            {
+                MainPage = new NavigationPage(new LoginPage());
+            }
+            else
+            {
+                switch (Application.Current.Properties["tipo_utente"].ToString())
+                {
+                    case "s":
+                    
+                        MainPage = new StudentHomePage();
+                        break;
+                    case "p":
+                        MainPage = new ProfHomePage();
+                        break;
+                }
+            }
         }
 
         protected override void OnStart()
