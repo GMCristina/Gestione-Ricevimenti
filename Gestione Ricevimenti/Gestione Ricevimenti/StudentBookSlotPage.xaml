@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Gestione_Ricevimenti.StudentBookSlotPage">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            
+            <Picker VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" Title="Seleziona il docente:" FontSize="Small"/>
+            <Button Text="RICHIEDI NUOVO RICEVIMENTO" VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" FontSize="Medium"/>
+
+            <ListView x:Name="slots"
+                VerticalOptions="StartAndExpand"
+                HorizontalOptions="FillAndExpand"
+                HasUnevenRows="True"
+                BindingContext="StudentBookSlotPage"
+                SelectionMode="None"
+                
+                     
+               >
+                <ListView.ItemTemplate>
+                    <DataTemplate >
+                        <ViewCell >
+                            <StackLayout HorizontalOptions="Fill" Orientation="Vertical">
+                                <Label x:Name="DataLabel" Text="{Binding giorno}" HorizontalOptions="Fill" VerticalOptions="StartAndExpand" FontSize="Medium" TextColor="Black" BackgroundColor="{StaticResource Grigio}"/>
+                                <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Orientation="Horizontal" Padding="10,0">
+                                     <Label x:Name="OraLabel" Text="{Binding inizio_fine}" HorizontalOptions="StartAndExpand" FontSize="Small"  TextColor="Gray" />
+                                   <Button x:Name="btn" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="Transparent" Text="{Binding stato_stringa}" FontAttributes="Italic" TextColor="{StaticResource colorPrimary}"/>
+                                </StackLayout>
+
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

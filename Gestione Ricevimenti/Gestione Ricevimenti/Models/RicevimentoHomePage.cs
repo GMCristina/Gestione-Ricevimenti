@@ -6,7 +6,7 @@ namespace Gestione_Ricevimenti
 {
     public class RicevimentoHomePage
     {
-        public RicevimentoHomePage(string id_ricevimento, string nome, string cognome, string giorno, string inizio, string fine, string corso, string stato)
+        public RicevimentoHomePage(string id_ricevimento, string nome, string cognome, string giorno, string inizio, string fine, string corso, string stato, string oggetto)
         {
             this.id_ricevimento = id_ricevimento;
             this.nome = nome;
@@ -16,6 +16,7 @@ namespace Gestione_Ricevimenti
             this.fine = fine;
             this.corso = corso;
             this.stato = stato;
+            this.oggetto = oggetto;
         }
 
         public string id_ricevimento { get; set; }
@@ -26,6 +27,8 @@ namespace Gestione_Ricevimenti
         public string fine { get; set; }
         public string corso { get; set; }
         public string stato { get; set; }
+        public string oggetto { get; set; }
+
         public string stato_stringa {
             get {
                 string s = "";

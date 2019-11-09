@@ -2,36 +2,46 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Gestione_Ricevimenti.StudentHomePage"
-             Title="Gestione Ricevimenti">
-
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Logout" Order="Secondary" Clicked="Logout">
-            <ToolbarItem.Icon>
-                <OnPlatform x:DataType="FileImageSource" Android="ic_exit_to_app_black_24dp.xml"/>
-            </ToolbarItem.Icon>
-        </ToolbarItem>
+             Title="Gestione Ricevimenti"
+             NavigationPage.HasBackButton="False">
+   
+        
+        <ContentPage.ToolbarItems>
+      
         <ToolbarItem Text="Home" Order="Primary" Clicked="Home">
             <ToolbarItem.Icon>
                 <OnPlatform x:DataType="FileImageSource" Android="ic_home_black_24dp.xml"/>
             </ToolbarItem.Icon>
         </ToolbarItem>
-        <ToolbarItem Text="Info" Order="Secondary" Clicked="Info" >
+        <ToolbarItem Text="Refresh" Order="Primary" Clicked="Refresh">
+            <ToolbarItem.Icon>
+                <OnPlatform x:DataType="FileImageSource" Android="ic_sync_black_24dp.xml"/>
+            </ToolbarItem.Icon>
         </ToolbarItem>
+        <ToolbarItem Text="Info" Order="Secondary" Clicked="Info">
+        </ToolbarItem>
+        <ToolbarItem Text="Logout" Order="Secondary" Clicked="Logout">
+        </ToolbarItem>
+
+
     </ContentPage.ToolbarItems>
+    
 
+    <AbsoluteLayout>
 
-    <StackLayout
-            HorizontalOptions="FillAndExpand"
-            VerticalOptions="FillAndExpand">
-            <ListView x:Name="ricevimenti"
-                HorizontalOptions="FillAndExpand"
+        <ListView x:Name="ricevimenti"
+                AbsoluteLayout.LayoutFlags="All"
+                AbsoluteLayout.LayoutBounds="0,1,1,1"
                 VerticalOptions="FillAndExpand"
                 HasUnevenRows="True"
                 BindingContext="RicevimentoHomePageResp"
+                SelectionMode="None"
+                ItemTapped="EventDetail" 
+                     
                >
             <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
+                <DataTemplate >
+                    <ViewCell >
                         <StackLayout HorizontalOptions="Fill" Orientation="Vertical">
                                 <Label x:Name="DataLabel" Text="{Binding giorno}" HorizontalOptions="Fill" VerticalOptions="StartAndExpand" FontSize="Medium" TextColor="Black" BackgroundColor="{StaticResource Grigio}"/>
                                 <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Orientation="Horizontal" Padding="10,0">
@@ -47,6 +57,57 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
             </ListView>
-        </StackLayout>
+        <Button Clicked="BookSlot" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="1.0,1.0,-1,-1" Margin="10" BorderRadius="30" WidthRequest="60" HeightRequest="60" Image="ic_add_black_24dp" BackgroundColor="{StaticResource colorPrimary}"/>
+        <ContentView x:Name="popupStudentEvent"  BackgroundColor="#C0808080" IsVisible="False" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+            <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,1,.5,1"  VerticalOptions="CenterAndExpand" BackgroundColor="White" Margin="20,20" Orientation="Vertical" Spacing="10">
+                <StackLayout VerticalOptions="StartAndExpand"  Margin="30,30, 30, 10" Orientation="Horizontal">
+                    <Label x:Name="labelDocente"  Text="Docente : " HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
+                    <Label x:Name="dataDocente"   HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
+                </StackLayout>
+                <StackLayout VerticalOptions="StartAndExpand"  Margin="30,10" Orientation="Horizontal">
+                    <Label x:Name="labelCorso"  Text="Corso :" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
+                    <Label x:Name="dataCorso"  Text="Matricola" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
+                </StackLayout>
+                <StackLayout VerticalOptions="StartAndExpand"  Margin="30,10" Orientation="Horizontal">
+                     <Label x:Name="labelData"  Text="Data :" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
+                     <Label x:Name="dataData"  Text="Matricola" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
+                </StackLayout>
+                <StackLayout VerticalOptions="StartAndExpand"  Margin="30,10" Orientation="Horizontal">
+                    <Label x:Name="labelInizio" Text="Inizio :" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
+                    <Label x:Name="dataInizio"  Text="Matricola" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
+                </StackLayout>
+                <StackLayout VerticalOptions="StartAndExpand"  Margin="30,10" Orientation="Horizontal">
+                    <Label x:Name="labelFine" Text="Fine :" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
+                    <Label x:Name="dataFine"  Text="Matricola" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
+                </StackLayout>
+                <StackLayout VerticalOptions="StartAndExpand"  Margin="30,10" Orientation="Horizontal">
+                        <Label x:Name="labelOggetto"  Text="Oggetto :" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
+                        <Label x:Name="dataOggetto"  Text="Matricola" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
+                </StackLayout>
+                <StackLayout VerticalOptions="StartAndExpand"  Margin="30,10" Orientation="Horizontal">
+                    <Button Text="Elimina" Clicked="Elimina" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" BackgroundColor="Transparent" TextColor="{StaticResource colorAccent}"/>
+                    <Button Text="Fine" Clicked="Fine" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" BackgroundColor="Transparent" TextColor="Black"/>
+                </StackLayout>
+            </StackLayout>
+
+        </ContentView>
+
+        <ContentView x:Name="tollbarMenu"  BackgroundColor="#FFFFFFFF" IsVisible="False" VerticalOptions="StartAndExpand" HorizontalOptions="EndAndExpand" AbsoluteLayout.LayoutBounds="1,0,.5,.5" AbsoluteLayout.LayoutFlags="All">
+            <ListView x:Name="menuItems"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"
+                SelectionMode="None"
+               
+                ItemTapped="MenuClick"
+                     
+                 >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ImageCell ImageSource="{Binding Source}" Text="{Binding Title}" TextColor="Black" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ContentView>
+    </AbsoluteLayout>
     
 </ContentPage>

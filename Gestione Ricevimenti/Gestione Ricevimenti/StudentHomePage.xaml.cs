@@ -12,28 +12,32 @@ namespace Gestione_Ricevimenti
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class StudentHomePage : ContentPage
 	{
+        public string id_ricevimento;
+
 		public StudentHomePage ()
 		{
-            // NavigationPage.SetHasBackButton(this, false);
-
-
-
+            
+           // NavigationPage.SetHasNavigationBar(this, true);
 
             ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti.php?");
             request.DownloadEvent();
-
-
-            InitializeComponent ();
-
-           
-            NavigationPage.SetHasNavigationBar(this, true);
             
-          
 
+            List<MenuToolbar> MenuItems = new List<MenuToolbar>
+            {
+                new MenuToolbar("iu.png","Info"),
+                new MenuToolbar("iu.png", "Logout")
+            };
 
-          
-               // Navigation.RemovePage(Navigation.NavigationStack[0]);
+            InitializeComponent();
+
+            menuItems.ItemsSource = MenuItems;
+            tollbarMenu.IsVisible = false;
             
+
+
+            // Navigation.RemovePage(Navigation.NavigationStack[0]);
+
         }
 
       
@@ -64,9 +68,98 @@ namespace Gestione_Ricevimenti
            
         }
 
+        protected async void Refresh(object sender, EventArgs e)
+        {
+            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti.php?");
+            request.DownloadEvent();
+        }
+
         protected async void Info(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new InfoPage());
         }
+
+        public void EventDetail(object sender, ItemTappedEventArgs e)
+        {
+
+            id_ricevimento = ((RicevimentoHomePage)e.Item).id_ricevimento;
+            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/ricevimento.php?id_ricevimento=" + id_ricevimento);
+            request.DownloadEventDetail();
+
+        }
+
+        public void Other(object sender, ItemTappedEventArgs e)
+        {
+            tollbarMenu.IsVisible = true;
+        }
+
+        public async void MenuClick(object sender, ItemTappedEventArgs e)
+        {
+            switch (((MenuToolbar)e.Item).Title)
+            {
+                case "Info":
+                    await Navigation.PushAsync(new InfoPage());
+                    break;
+                case "Logout":
+                    Application.Current.Properties.Remove("id_utente");
+                    Application.Current.Properties.Remove("tipo_utente");
+                    Application.Current.Properties.Remove("matricola");
+                    Application.Current.Properties.Remove("password");
+                    //await Navigation.PopAsync();
+
+
+                    await Navigation.PushAsync(new LoginPage());
+                    Navigation.RemovePage(this); break;
+
+            }
+            tollbarMenu.IsVisible = false;
+
+        }
+
+        public void Fine(object sender, ItemTappedEventArgs e)
+        {
+
+            popupStudentEvent.IsVisible = false;
+
+        }
+
+        public async void Elimina(object sender, ItemTappedEventArgs e)
+        {
+            var answer =  await DisplayAlert("Cancella Prenotazione","Confermi di voler cancellare definitivamente la prenotazione effettuata?", "Sì", "No");
+            if (answer)
+            {
+                ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/cancella_ricevimento.php?id=" + id_ricevimento);
+                request.DeleteEvent();
+
+                ServerRequest request2 = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti.php?");
+                request2.DownloadEvent();
+
+                popupStudentEvent.IsVisible = false;
+            }
+
+        }
+
+        protected async void BookSlot(object sender, EventArgs args)
+        {
+            await Navigation.PushAsync(new StudentBookSlotPage());
+        
+
+        }
+
+        public void WriteDetail (RicevimentoHomePage r)
+        {
+            dataDocente.Text = r.nome_cognome;
+            dataCorso.Text = r.corso;
+            dataData.Text = r.giorno;
+            dataInizio.Text = r.inizio;
+            dataFine.Text = r.fine;
+            dataOggetto.Text = r.oggetto;
+           
+
+          popupStudentEvent.IsVisible = true;
+
+        }
+
+       
     }
 }

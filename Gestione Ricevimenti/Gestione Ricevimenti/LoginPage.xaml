@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:Gestione_Ricevimenti"
              x:Class="Gestione_Ricevimenti.LoginPage"
              Title="Gestione Ricevimenti"
+             NavigationPage.HasBackButton="False"
             >
 
     <ContentPage.ToolbarItems>
