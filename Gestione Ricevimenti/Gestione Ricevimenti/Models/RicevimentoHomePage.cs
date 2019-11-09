@@ -29,6 +29,8 @@ namespace Gestione_Ricevimenti
         public string stato { get; set; }
         public string oggetto { get; set; }
 
+        public string id_professore { get; set; }
+
         public string stato_stringa {
             get {
                 string s = "";

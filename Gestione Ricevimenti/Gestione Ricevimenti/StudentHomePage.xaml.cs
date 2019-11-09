@@ -17,7 +17,6 @@ namespace Gestione_Ricevimenti
 		public StudentHomePage ()
 		{
             
-           // NavigationPage.SetHasNavigationBar(this, true);
 
             ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti.php?");
             request.DownloadEvent();
@@ -33,14 +32,16 @@ namespace Gestione_Ricevimenti
 
             menuItems.ItemsSource = MenuItems;
             tollbarMenu.IsVisible = false;
-            
+       }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
 
-            // Navigation.RemovePage(Navigation.NavigationStack[0]);
+            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti.php?");
+            request.DownloadEvent();
 
         }
-
-      
 
         public void fillListStudentHomePage(List<RicevimentoHomePage> l)
         {
@@ -53,14 +54,19 @@ namespace Gestione_Ricevimenti
             Application.Current.Properties.Remove("tipo_utente");
             Application.Current.Properties.Remove("matricola");
             Application.Current.Properties.Remove("password");
-            //await Navigation.PopAsync();
 
-            
+
+            var c = Navigation.NavigationStack.Count();
+
+            for (int i = 0; i < c - 1; i++)
+            {
+                Navigation.RemovePage(Navigation.NavigationStack[i]);
+
+            }
+
             await Navigation.PushAsync( new LoginPage());
             Navigation.RemovePage(this);
-            
-
-            // await Navigation.PushModalAsync(new LoginPage());
+      
         }
 
         protected async void Home(object sender, EventArgs e)
@@ -76,6 +82,14 @@ namespace Gestione_Ricevimenti
 
         protected async void Info(object sender, EventArgs e)
         {
+            var c = Navigation.NavigationStack.Count();
+
+            for (int i = 0; i < c - 1; i++)
+            {
+                Navigation.RemovePage(Navigation.NavigationStack[i]);
+
+            }
+
             await Navigation.PushAsync(new InfoPage());
         }
 
@@ -105,9 +119,7 @@ namespace Gestione_Ricevimenti
                     Application.Current.Properties.Remove("tipo_utente");
                     Application.Current.Properties.Remove("matricola");
                     Application.Current.Properties.Remove("password");
-                    //await Navigation.PopAsync();
-
-
+  
                     await Navigation.PushAsync(new LoginPage());
                     Navigation.RemovePage(this); break;
 
@@ -131,10 +143,8 @@ namespace Gestione_Ricevimenti
                 ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/cancella_ricevimento.php?id=" + id_ricevimento);
                 request.DeleteEvent();
 
-                ServerRequest request2 = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti.php?");
-                request2.DownloadEvent();
-
                 popupStudentEvent.IsVisible = false;
+             
             }
 
         }
@@ -161,5 +171,6 @@ namespace Gestione_Ricevimenti
         }
 
        
+
     }
 }

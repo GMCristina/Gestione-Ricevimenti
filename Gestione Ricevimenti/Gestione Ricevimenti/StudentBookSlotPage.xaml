@@ -1,37 +1,86 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Gestione_Ricevimenti.StudentBookSlotPage">
+             x:Class="Gestione_Ricevimenti.StudentBookSlotPage"
+             Title="Gestione Ricevimenti"
+             NavigationPage.HasBackButton="False">
+    <ContentPage.ToolbarItems>
+
+        <ToolbarItem Text="Home" Order="Primary" Clicked="Home">
+            <ToolbarItem.Icon>
+                <OnPlatform x:DataType="FileImageSource" Android="ic_home_black_24dp.xml"/>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+        <ToolbarItem Text="Refresh" Order="Primary" Clicked="Refresh">
+            <ToolbarItem.Icon>
+                <OnPlatform x:DataType="FileImageSource" Android="ic_sync_black_24dp.xml"/>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+        <ToolbarItem Text="Info" Order="Secondary" Clicked="Info">
+        </ToolbarItem>
+        <ToolbarItem Text="Logout" Order="Secondary" Clicked="Logout">
+        </ToolbarItem>
+
+
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            
-            <Picker VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" Title="Seleziona il docente:" FontSize="Small"/>
-            <Button Text="RICHIEDI NUOVO RICEVIMENTO" VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" FontSize="Medium"/>
+        <AbsoluteLayout  >
+            <StackLayout Orientation="Vertical" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0,7">
+                <Label Text="Seleziona il docente: " FontSize="Small" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"/>
+                <Picker  x:Name="pickerDocente" SelectedIndexChanged="DocenteSelezionato" ItemDisplayBinding="{Binding nome_cognome}" Title="Seleziona il docente: " VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" FontSize="Small"/>
+                <Button Clicked="NuovoRicevimento" Text="richiedi nuovo ricevimento" BackgroundColor="{StaticResource Grigio}"  TextColor="{StaticResource colorPrimary}" VerticalOptions="StartAndExpand" HorizontalOptions="Fill" FontSize="Medium"/>
 
-            <ListView x:Name="slots"
-                VerticalOptions="StartAndExpand"
-                HorizontalOptions="FillAndExpand"
-                HasUnevenRows="True"
-                BindingContext="StudentBookSlotPage"
-                SelectionMode="None"
+                <ListView x:Name="slots"
+                    VerticalOptions="StartAndExpand"
+                    HorizontalOptions="FillAndExpand"
+                    HasUnevenRows="True"
+                    BindingContext="StudentBookSlotPage"
+                    SelectionMode="None"
+                    IsGroupingEnabled="True"
+                    ItemTapped="ItemClick"
                 
-                     
-               >
-                <ListView.ItemTemplate>
-                    <DataTemplate >
-                        <ViewCell >
-                            <StackLayout HorizontalOptions="Fill" Orientation="Vertical">
-                                <Label x:Name="DataLabel" Text="{Binding giorno}" HorizontalOptions="Fill" VerticalOptions="StartAndExpand" FontSize="Medium" TextColor="Black" BackgroundColor="{StaticResource Grigio}"/>
-                                <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Orientation="Horizontal" Padding="10,0">
-                                     <Label x:Name="OraLabel" Text="{Binding inizio_fine}" HorizontalOptions="StartAndExpand" FontSize="Small"  TextColor="Gray" />
-                                   <Button x:Name="btn" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="Transparent" Text="{Binding stato_stringa}" FontAttributes="Italic" TextColor="{StaticResource colorPrimary}"/>
-                                </StackLayout>
+                   >
+                
+                    <ListView.GroupHeaderTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label x:Name="DataLabel" Text="{Binding key}" HorizontalOptions="Fill" VerticalOptions="StartAndExpand" FontSize="Medium" TextColor="Black" BackgroundColor="{StaticResource Grigio}"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.GroupHeaderTemplate>
+                
+                    <ListView.ItemTemplate>
+                        <DataTemplate >
+                            <ViewCell >
+                                <StackLayout HorizontalOptions="Fill" Orientation="Vertical" Spacing="0">
+                                    <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Orientation="Horizontal" Padding="10,0">
+                                       <Label x:Name="OraLabel" Text="{Binding inizio_fine}" HorizontalOptions="StartAndExpand"  VerticalOptions="Center" FontSize="Small"  TextColor="Gray" />
+                                       <Button  x:Name="btn" HorizontalOptions="EndAndExpand" VerticalOptions="CenterAndExpand"  BackgroundColor="Transparent" Text="Prenota" FontAttributes="Italic" TextColor="{StaticResource colorPrimary}"/>
+                                    </StackLayout>
 
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackLayout>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+
+            <ContentView x:Name="popupBookSlot"  BackgroundColor="#C0808080" IsVisible="False" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+                <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,1,.5,1"  VerticalOptions="CenterAndExpand" BackgroundColor="White" Margin="20,20" Padding="10, 10, 20,0" Orientation="Vertical" Spacing="10">
+                    <Label   Text="Prenota Slot" FontSize="Medium" FontAttributes="Bold" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
+                    <Label   Text="Confermi di voler prenotare lo slot selezionato?" HorizontalTextAlignment="Start" FontSize="Small" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
+                    <Picker  x:Name="pickerCorso" SelectedItem="{Binding id_corso}" ItemDisplayBinding="{Binding nome}" Title="Seleziona il corso: " VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" FontSize="Small"/>
+                    <Editor x:Name="Oggetto"  AutoSize="TextChanges" Placeholder="Oggetto" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" />
+                    <StackLayout VerticalOptions="StartAndExpand"  Margin="30,10" Orientation="Horizontal">
+                        <Button Text="No" Clicked="NonPrenota" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" BackgroundColor="Transparent" TextColor="{StaticResource colorAccent}"/>
+                        <Button Text="Sì" Clicked="Prenota" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand"  BackgroundColor="Transparent" TextColor="{StaticResource colorAccent}"/>
+                    </StackLayout>
+                </StackLayout>
+
+            </ContentView>
+
+
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

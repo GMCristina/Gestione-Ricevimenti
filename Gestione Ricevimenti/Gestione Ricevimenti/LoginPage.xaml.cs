@@ -38,6 +38,14 @@ namespace Gestione_Ricevimenti
             {
                 case "s":
                     // Navigation.PushModalAsync(new StudentHomePage());
+                    var c = Navigation.NavigationStack.Count();
+
+                    for (int i = 0; i < c - 1; i++)
+                    {
+                        Navigation.RemovePage(Navigation.NavigationStack[i]);
+
+                    }
+
                     Navigation.PushAsync(new StudentHomePage());
                     Navigation.RemovePage(this);
 

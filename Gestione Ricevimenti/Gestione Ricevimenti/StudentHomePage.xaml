@@ -37,6 +37,7 @@
                 BindingContext="RicevimentoHomePageResp"
                 SelectionMode="None"
                 ItemTapped="EventDetail" 
+                 
                      
                >
             <ListView.ItemTemplate>
