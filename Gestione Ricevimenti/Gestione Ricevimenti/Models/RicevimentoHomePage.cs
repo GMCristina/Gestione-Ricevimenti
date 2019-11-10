@@ -67,7 +67,10 @@ namespace Gestione_Ricevimenti
         {
             get
             {
-                return nome + " " + cognome;
+                if (nome != null && cognome != null)
+                    return nome + " " + cognome;
+                else
+                    return "Nessuno studente";
             }
         }
 

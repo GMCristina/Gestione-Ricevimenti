@@ -26,9 +26,9 @@
 
     <ContentPage.Content>
         <AbsoluteLayout  >
-            <StackLayout Orientation="Vertical" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0,7">
+            <StackLayout Orientation="Vertical"  AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0,7">
                 <Label Text="Seleziona il docente: " FontSize="Small" HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"/>
-                <Picker  x:Name="pickerDocente" SelectedIndexChanged="DocenteSelezionato" ItemDisplayBinding="{Binding nome_cognome}" Title="Seleziona il docente: " VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" FontSize="Small"/>
+                <Picker  x:Name="pickerDocente" SelectedIndexChanged="DocenteSelezionato" ItemDisplayBinding="{Binding nome_cognome}" Title="Seleziona il docente: " VerticalOptions="StartAndExpand" HorizontalOptions="CenterAndExpand" FontSize="Medium"/>
                 <Button Clicked="NuovoRicevimento" Text="richiedi nuovo ricevimento" BackgroundColor="{StaticResource Grigio}"  TextColor="{StaticResource colorPrimary}" VerticalOptions="StartAndExpand" HorizontalOptions="Fill" FontSize="Medium"/>
 
                 <ListView x:Name="slots"
@@ -67,16 +67,18 @@
             </StackLayout>
 
             <ContentView x:Name="popupBookSlot"  BackgroundColor="#C0808080" IsVisible="False" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
-                <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,1,.5,1"  VerticalOptions="CenterAndExpand" BackgroundColor="White" Margin="20,20" Padding="10, 10, 20,0" Orientation="Vertical" Spacing="10">
-                    <Label   Text="Prenota Slot" FontSize="Medium" FontAttributes="Bold" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
-                    <Label   Text="Confermi di voler prenotare lo slot selezionato?" HorizontalTextAlignment="Start" FontSize="Small" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
-                    <Picker  x:Name="pickerCorso" SelectedItem="{Binding id_corso}" ItemDisplayBinding="{Binding nome}" Title="Seleziona il corso: " VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" FontSize="Small"/>
-                    <Editor x:Name="Oggetto"  AutoSize="TextChanges" Placeholder="Oggetto" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" />
-                    <StackLayout VerticalOptions="StartAndExpand"  Margin="30,10" Orientation="Horizontal">
-                        <Button Text="No" Clicked="NonPrenota" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" BackgroundColor="Transparent" TextColor="{StaticResource colorAccent}"/>
-                        <Button Text="Sì" Clicked="Prenota" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand"  BackgroundColor="Transparent" TextColor="{StaticResource colorAccent}"/>
+                <ScrollView>
+                    <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,1,.5,1"  VerticalOptions="CenterAndExpand" BackgroundColor="White" Margin="20,20" Padding="10, 10, 20,0" Orientation="Vertical" Spacing="10">
+                        <Label   Text="Prenota Slot" FontSize="Medium" FontAttributes="Bold" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
+                        <Label   Text="Confermi di voler prenotare lo slot selezionato?" HorizontalTextAlignment="Start" FontSize="Small" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
+                        <Picker  x:Name="pickerCorso" SelectedItem="{Binding id_corso}" ItemDisplayBinding="{Binding nome}" Title="Seleziona il corso: " VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" FontSize="Small"/>
+                        <Editor x:Name="Oggetto"  AutoSize="TextChanges" Placeholder="Oggetto" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" />
+                        <StackLayout VerticalOptions="StartAndExpand"  Margin="30,10" Orientation="Horizontal">
+                            <Button Text="No" Clicked="NonPrenota" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" BackgroundColor="Transparent" TextColor="{StaticResource colorAccent}"/>
+                            <Button Text="Sì" Clicked="Prenota" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand"  BackgroundColor="Transparent" TextColor="{StaticResource colorAccent}"/>
+                        </StackLayout>
                     </StackLayout>
-                </StackLayout>
+                </ScrollView>
 
             </ContentView>
 

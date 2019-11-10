@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,8 +16,12 @@ namespace Gestione_Ricevimenti
         public string id_professore;
         public string id_corso;
         public string nome_cognome_prof { get; }
+        public string durata { set; get; }
+        public DateTime giorno { set; get; }
+        public TimeSpan inizio { set; get; }
+        public string oggetto;
 
-		public StudentNewEventPage (string id_prof, string docente)
+        public StudentNewEventPage (string id_prof, string docente)
 		{
             BindingContext = this;
             id_professore = id_prof;
@@ -27,7 +32,19 @@ namespace Gestione_Ricevimenti
             request.DownloadSpinnerCorso(false);
 
             InitializeComponent ();
-		}
+
+            Timepick.Time = DateTime.Now.TimeOfDay;
+            inizio = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, 00);
+            Datepick.Date = DateTime.Now.Date;
+            Datepick.MinimumDate = DateTime.Now.Date; 
+            giorno = DateTime.Now.Date;
+
+            pickerDurata.SelectedIndex = 0;
+            durata = pickerDurata.SelectedItem.ToString();
+
+            oggetto = "";
+
+        }
 
         public void fillSpinnerCorso(List<Corso> corsi)
         {
@@ -39,25 +56,37 @@ namespace Gestione_Ricevimenti
             id_corso = corsi.First().id_corso;
         }
 
-        protected async void AnnullaClick(object sender, EventArgs args)
+        public async void AnnullaClick(object sender, EventArgs args)
         {
-            var c = Navigation.NavigationStack.Count();
-
-            for (int i = 0; i < c - 1; i++)
-            {
-                Navigation.RemovePage(Navigation.NavigationStack[i]);
-
-            }
-
-            await Navigation.PushAsync(new StudentBookSlotPage());
-            Navigation.RemovePage(this);
+          
+            await Navigation.PopAsync();
         }
 
         protected async void RichiediClick(object sender, EventArgs args)
         {
+            if (id_professore != null && id_corso != null && giorno != null && inizio != null && durata != null)
+            {
+               
+                String[] st = durata.Split(' ');
+                if (st[1].Equals("h"))    
+                    durata = ((Convert.ToInt32(st[0])) * 60).ToString();
+                else
+                    durata = st[0];
 
+                oggetto = Note.Text;
+
+                string inizioMod = inizio.Hours + ":" + inizio.Minutes;
+
+                 ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/richiesta_nuovo_ricevimento.php");
+                 request.SlotRequest(id_professore, id_corso, giorno.ToShortDateString(), inizioMod, durata, oggetto);
+              
+            }
+            else
+            {
+                DependencyService.Get<IMessage>().ShortAlert("Richiesta fallita: dati mancanti");
+            }
         }
 
-
+      
     }
 }

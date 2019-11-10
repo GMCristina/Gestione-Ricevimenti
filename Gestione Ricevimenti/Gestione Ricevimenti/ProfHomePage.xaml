@@ -2,12 +2,116 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Gestione_Ricevimenti.ProfHomePage"
-             Title="Gestione Ricevimenti">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+             Title="Gestione Ricevimenti"
+             NavigationPage.HasBackButton="False">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Home" Order="Primary" Clicked="Home">
+            <ToolbarItem.Icon>
+                <OnPlatform x:DataType="FileImageSource" Android="ic_home_black_24dp.xml"/>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+        <ToolbarItem Text="Refresh" Order="Primary" Clicked="Refresh">
+            <ToolbarItem.Icon>
+                <OnPlatform x:DataType="FileImageSource" Android="ic_sync_black_24dp.xml"/>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+        <ToolbarItem Text="Info" Order="Secondary" Clicked="Info">
+        </ToolbarItem>
+        <ToolbarItem Text="Logout" Order="Secondary" Clicked="Logout">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <AbsoluteLayout>
+        <StackLayout Orientation="Vertical" Spacing="5"  AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,1"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <Picker  x:Name="pickerStato"  SelectedItem="{Binding categoria}" Title="Seleziona la categoria: " Margin="5,5" VerticalOptions="Start" HorizontalOptions="CenterAndExpand"  FontSize="Medium">
+                <Picker.Items>
+                    <x:String>Tutti</x:String>
+                    <x:String>Liberi</x:String>
+                    <x:String>Prenotati</x:String>
+                    <x:String>Richiesti</x:String>
+                    <x:String>Approvati</x:String>
+                    <x:String>Eliminati</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <ListView x:Name="ricevimenti"
+               
+                    VerticalOptions="FillAndExpand"
+                    HasUnevenRows="True"
+                    BindingContext="RicevimentoHomePageResp"
+                    SelectionMode="None"
+                    IsGroupingEnabled="True"
+                 
+                     
+                   >
+                <ListView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Label x:Name="DataLabel" Text="{Binding key}" HorizontalOptions="Fill" VerticalOptions="StartAndExpand" FontSize="Medium" TextColor="Black" BackgroundColor="{StaticResource Grigio}"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.GroupHeaderTemplate>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate >
+                        <ViewCell >
+                            <StackLayout HorizontalOptions="Fill" Orientation="Vertical">
+                                <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Orientation="Horizontal" Padding="10,0">
+                                    <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="Fill" Orientation="Vertical" >
+                                        <Label x:Name="NomeLabel" Text="{Binding nome_cognome}" HorizontalOptions="StartAndExpand"  FontSize="Small"  TextColor="Gray" />
+                                        <Label x:Name="OraLabel" Text="{Binding inizio_fine}" HorizontalOptions="StartAndExpand" FontSize="Small"  TextColor="Gray" />
+                                    </StackLayout>
+                                    <Button x:Name="btn" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="Transparent" Text="{Binding stato_stringa}" FontAttributes="Italic" TextColor="{StaticResource colorPrimary}"/>
+                                </StackLayout>
+
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
-    </ContentPage.Content>
+
+        <Button Clicked="NewSlot" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="1.0,1.0,-1,-1" Margin="10" BorderRadius="30" WidthRequest="60" HeightRequest="60" Image="ic_add_black_24dp" BackgroundColor="{StaticResource colorPrimary}"/>
+       
+        <ContentView x:Name="popupProfEvent"  BackgroundColor="#C0808080" IsVisible="False" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+            <ScrollView>
+                <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,1,.5,1"  VerticalOptions="CenterAndExpand" BackgroundColor="White" Margin="20,20" Orientation="Vertical" Spacing="10">
+                    <StackLayout VerticalOptions="StartAndExpand"  Margin="30,30, 30, 10" Orientation="Horizontal">
+                        <Label   Text="Studente : " HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
+                        <Label x:Name="dataStudente"   HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
+                    </StackLayout>
+                    <StackLayout VerticalOptions="StartAndExpand"  Margin="30,10" Orientation="Horizontal">
+                        <Label x:Name="labelCorso"  Text="Corso :" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
+                        <Label x:Name="dataCorso"  Text="Matricola" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
+                    </StackLayout>
+                    <StackLayout VerticalOptions="StartAndExpand"  Margin="30,10" Orientation="Horizontal">
+                        <Label x:Name="labelData"  Text="Data :" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
+                        <Label x:Name="dataData"  Text="Matricola" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
+                    </StackLayout>
+                    <StackLayout VerticalOptions="StartAndExpand"  Margin="30,10" Orientation="Horizontal">
+                        <Label x:Name="labelInizio" Text="Inizio :" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
+                        <Label x:Name="dataInizio"  Text="Matricola" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
+                    </StackLayout>
+                    <StackLayout VerticalOptions="StartAndExpand"  Margin="30,10" Orientation="Horizontal">
+                        <Label x:Name="labelFine" Text="Fine :" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
+                        <Label x:Name="dataFine"  Text="Matricola" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
+                    </StackLayout>
+                    <StackLayout VerticalOptions="StartAndExpand"  Margin="30,10" Orientation="Horizontal">
+                        <Label x:Name="labelOggetto"  Text="Oggetto :" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
+                        <Label x:Name="dataOggetto"  Text="Matricola" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
+                    </StackLayout>
+                    <StackLayout VerticalOptions="StartAndExpand"  Margin="30,10" Orientation="Horizontal">
+                        <Button Text="Conferma"  HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" BackgroundColor="Transparent" TextColor="Green"/>
+                        <Button Text="Rifuta"  HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" BackgroundColor="Transparent" TextColor="{StaticResource colorAccent}"/>
+                        <Button Text="Fine"  HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" BackgroundColor="Transparent" TextColor="Black"/>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+        </ContentView>
+
+        
+    </AbsoluteLayout>
+
+
 </ContentPage>

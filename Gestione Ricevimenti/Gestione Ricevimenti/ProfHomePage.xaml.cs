@@ -12,9 +12,112 @@ namespace Gestione_Ricevimenti
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ProfHomePage : ContentPage
 	{
+        string categoria { set; get; }
+
 		public ProfHomePage ()
-		{
-			InitializeComponent ();
+        {
+            string id = Application.Current.Properties["id_utente"].ToString();
+            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti_prof.php?" + "id_professore=" + id);
+            request.DownloadSlotProf();
+
+            InitializeComponent ();
+
+            pickerStato.SelectedIndex = 0;
+            categoria = pickerStato.SelectedItem.ToString();
 		}
-	}
+
+
+        protected async void Logout(object sender, EventArgs args)
+        {
+            Application.Current.Properties.Remove("id_utente");
+            Application.Current.Properties.Remove("tipo_utente");
+            Application.Current.Properties.Remove("matricola");
+            Application.Current.Properties.Remove("password");
+
+            var c = Navigation.NavigationStack.Count();
+
+            for (int i = 0; i < c - 1; i++)
+            {
+                Navigation.RemovePage(Navigation.NavigationStack[i]);
+
+            }
+
+            await Navigation.PushAsync(new LoginPage());
+            Navigation.RemovePage(this);
+
+        }
+
+        protected async void Home(object sender, EventArgs e)
+        {
+
+        }
+
+        protected async void Refresh(object sender, EventArgs e)
+        {
+            string id = Application.Current.Properties["id_utente"].ToString();
+            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti_prof.php?" + "id_professore=" + id);
+            request.DownloadSlotProf();
+        }
+
+        protected async void Info(object sender, EventArgs e)
+        {
+            var c = Navigation.NavigationStack.Count();
+
+            for (int i = 0; i < c - 1; i++)
+            {
+                Navigation.RemovePage(Navigation.NavigationStack[i]);
+
+            }
+
+            await Navigation.PushAsync(new InfoPage());
+        }
+
+
+        public void fillListProfHomePage(List<RicevimentoHomePage> list)
+        {
+
+            List<GroupedRicevimento> l = new List<GroupedRicevimento>();
+
+            if (list.Count() != 0)
+            {
+                string precGiorno = list.First().giorno;
+                GroupedRicevimento l1 = new GroupedRicevimento(precGiorno);
+
+
+
+                foreach (RicevimentoHomePage elem in list)
+                {
+                    if (precGiorno.Equals(elem.giorno))
+                    {
+                        l1.Add(elem);
+                    }
+                    else
+                    {
+                        l.Add(l1);
+                        precGiorno = elem.giorno;
+                        l1 = new GroupedRicevimento(precGiorno);
+                        l1.Add(elem);
+                    }
+
+                }
+
+                l.Add(l1);
+
+                ricevimenti.ItemsSource = l;
+
+            }
+            else
+            {
+
+                ricevimenti.ItemsSource = null;
+            }
+        }
+
+        protected async void NewSlot(object sender, EventArgs args)
+        {
+            await Navigation.PushAsync(new ProfInsertSlotPage());
+
+
+        }
+    }
 }

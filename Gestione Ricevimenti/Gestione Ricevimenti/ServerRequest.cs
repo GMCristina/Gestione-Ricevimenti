@@ -256,17 +256,76 @@ namespace Gestione_Ricevimenti
             DownloadSlot();
         }
 
-       
+        public async void SlotRequest(string id_docente, string id_corso, string data, string inizio, string durata, string oggetto)
+        {
+            string id_studente = Application.Current.Properties["id_utente"].ToString();
+
+            HttpContent formcontent = new FormUrlEncodedContent(new[] {
+                new KeyValuePair<string,string>("id_studente",id_studente),
+                new KeyValuePair<string,string>("id_docente",id_docente),
+                new KeyValuePair<string,string>("id_corso",id_corso),
+                new KeyValuePair<string,string>("data",data),
+                new KeyValuePair<string,string>("inizio",inizio),
+                new KeyValuePair<string,string>("durata",durata),
+                new KeyValuePair<string,string>("oggetto",oggetto),
+
+            });
+
+            var response = await _client.PostAsync(URL, formcontent);
+            if (response.IsSuccessStatusCode)
+            {
+                string result = response.Content.ReadAsStringAsync().Result.ToString();
+                string res = JsonConvert.DeserializeObject<string>(result);
+                switch (res)
+                {
+                    case "1":
+                        DependencyService.Get<IMessage>().ShortAlert("Richiesta effettuata correttamente");
+                        mainPage.Navigation.PopAsync();
+                        break;
+                    case "-2":
+                        DependencyService.Get<IMessage>().ShortAlert("Richiesta fallita: riprova");
+                        break;
+                    case "-3":
+                        DependencyService.Get<IMessage>().ShortAlert("Richiesta fallita: Hai già richiesto un ricevimento con questo docente in questo giorno");
+                        break;
+                    default:
+                        break;
+
+                }
+            }
+            else
+            {
+                DependencyService.Get<IMessage>().ShortAlert("Richiesta fallita, riprova");
+            }
+        }
+
+
+            public async void DownloadSlotProf()
+            {
+               
+
+                var response = await _client.GetAsync(URL);
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = response.Content.ReadAsStringAsync().Result;
+                    Dictionary<string, RicevimentoHomePage> result_event = JsonConvert.DeserializeObject<Dictionary<string, RicevimentoHomePage>>(result);
+                    List<RicevimentoHomePage> events = new List<RicevimentoHomePage>();
+
+                    foreach (KeyValuePair<string, RicevimentoHomePage> elem in result_event)
+                    {
+
+                        events.Add(new RicevimentoHomePage(elem.Value.id_ricevimento, elem.Value.nome, elem.Value.cognome, elem.Value.giorno, elem.Value.inizio, elem.Value.fine, elem.Value.corso, elem.Value.stato, elem.Value.oggetto));
+                    }
+                    ((ProfHomePage)mainPage).fillListProfHomePage(events);
+                }
+                else
+                    Debug.WriteLine("Nothing retrieved from server.");
 
 
 
+            }
 
-    }
+        }
 
-
-
-   
-
-
-
+    
 }

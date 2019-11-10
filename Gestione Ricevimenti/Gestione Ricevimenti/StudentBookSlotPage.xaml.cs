@@ -202,6 +202,7 @@ namespace Gestione_Ricevimenti
         {
             id_ricevimento = ((Slot)e.Item).id_ricevimento;
             string id_studente = Application.Current.Properties["id_utente"].ToString();
+
             ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_corsi_studente_docente.php?" + "id_studente=" + id_studente + "&id_professore=" + id_professore);
             request.DownloadSpinnerCorso(true);
 

@@ -7,22 +7,34 @@
              >
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Orientation="Vertical" Spacing="0" Padding="0">
-                <StackLayout VerticalOptions="StartAndExpand" Orientation="Horizontal" Margin="30,10,30,0">
+            <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Orientation="Vertical" Margin="5,0" Spacing="3" Padding="0">
+                <StackLayout VerticalOptions="Start" Orientation="Horizontal" Margin="30,10,30,0">
                     <Button Text="Annulla" Clicked="AnnullaClick" HorizontalOptions="StartAndExpand" VerticalOptions="Start" BackgroundColor="Transparent" TextColor="{StaticResource colorAccent}"/>
                     <Button Text="Richiedi" Clicked="RichiediClick" HorizontalOptions="EndAndExpand" VerticalOptions="Start"  BackgroundColor="Transparent" TextColor="Black"/>
                 </StackLayout>
                 <Label Text="Docente: " TextColor="Black" FontSize="Medium" BackgroundColor="{StaticResource Grigio}" VerticalOptions="Start" HorizontalOptions="FillAndExpand"/>
                 <Label Text="{Binding nome_cognome_prof}" Margin="10,7"  FontSize="Medium" VerticalOptions="Start" HorizontalOptions="EndAndExpand"/>
-                <Label Text="Corso : " TextColor="Black" FontSize="Medium" BackgroundColor="{StaticResource Grigio}" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand"/>
-                <Picker  x:Name="pickerCorso" SelectedItem="{Binding id_corso}" ItemDisplayBinding="{Binding nome}" Margin="10,7" Title="Seleziona il corso: " VerticalOptions="Start" HorizontalOptions="EndAndExpand"  FontSize="Small"/>
+                <Label Text="Corso : " TextColor="Black" FontSize="Medium" BackgroundColor="{StaticResource Grigio}" VerticalOptions="Start" HorizontalOptions="FillAndExpand"/>
+                <Picker  x:Name="pickerCorso" SelectedItem="{Binding id_corso}" ItemDisplayBinding="{Binding nome}" Title="Seleziona il corso: " VerticalOptions="Start" HorizontalOptions="FillAndExpand"  FontSize="Medium"/>
                
 
-                <Label Text="Data : " TextColor="Black" FontSize="Medium" BackgroundColor="{StaticResource Grigio}" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand"/>
-                <Label Text="Inizio : " TextColor="Black" FontSize="Medium" BackgroundColor="{StaticResource Grigio}" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand"/>
-                <Label Text="Durata : " TextColor="Black" FontSize="Medium" BackgroundColor="{StaticResource Grigio}" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand"/>
-                <Label Text="Note : "  TextColor="Black" FontSize="Medium" BackgroundColor="{StaticResource Grigio}" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand"/>
-                <Editor AutoSize="TextChanges" Placeholder="Oggetto del ricevimento" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand"/>
+                <Label Text="Data : " TextColor="Black" FontSize="Medium" BackgroundColor="{StaticResource Grigio}" VerticalOptions="Start" HorizontalOptions="FillAndExpand"/>
+                <DatePicker x:Name="Datepick"  Format="dd/MM/yyyy" Date="{Binding giorno}"   VerticalOptions="Start" HorizontalOptions="EndAndExpand" />
+                <Label Text="Inizio : " TextColor="Black" FontSize="Medium" BackgroundColor="{StaticResource Grigio}" VerticalOptions="Start" HorizontalOptions="FillAndExpand"/>
+                <TimePicker x:Name="Timepick"  Format="HH:mm" Time="{Binding inizio}" VerticalOptions="Start" HorizontalOptions="EndAndExpand"/>
+                <Label Text="Durata : " TextColor="Black" FontSize="Medium" BackgroundColor="{StaticResource Grigio}" VerticalOptions="Start" HorizontalOptions="FillAndExpand"/>
+                <Picker  x:Name="pickerDurata" SelectedItem="{Binding durata}"  Title="Seleziona la durata : " VerticalOptions="Start" HorizontalOptions="FillAndExpand"  FontSize="Medium">
+                    <Picker.Items>
+                        <x:String>5 min</x:String>
+                        <x:String>10 min</x:String>
+                        <x:String>15 min</x:String>
+                        <x:String>30 min</x:String>
+                        <x:String>1 h</x:String>
+                        <x:String>2 h</x:String>
+                    </Picker.Items>
+                </Picker>
+                <Label Text="Note : "  TextColor="Black" FontSize="Medium" BackgroundColor="{StaticResource Grigio}" VerticalOptions="Start" HorizontalOptions="FillAndExpand"/>
+                <Editor x:Name="Note" AutoSize="TextChanges" Placeholder="Oggetto del ricevimento" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand"/>
 
 
             </StackLayout>

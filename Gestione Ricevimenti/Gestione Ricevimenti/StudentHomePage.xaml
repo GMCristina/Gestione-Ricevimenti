@@ -60,6 +60,7 @@
             </ListView>
         <Button Clicked="BookSlot" AbsoluteLayout.LayoutFlags="PositionProportional" AbsoluteLayout.LayoutBounds="1.0,1.0,-1,-1" Margin="10" BorderRadius="30" WidthRequest="60" HeightRequest="60" Image="ic_add_black_24dp" BackgroundColor="{StaticResource colorPrimary}"/>
         <ContentView x:Name="popupStudentEvent"  BackgroundColor="#C0808080" IsVisible="False" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+            <ScrollView>
             <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,1,.5,1"  VerticalOptions="CenterAndExpand" BackgroundColor="White" Margin="20,20" Orientation="Vertical" Spacing="10">
                 <StackLayout VerticalOptions="StartAndExpand"  Margin="30,30, 30, 10" Orientation="Horizontal">
                     <Label x:Name="labelDocente"  Text="Docente : " HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
@@ -90,7 +91,7 @@
                     <Button Text="Fine" Clicked="Fine" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" BackgroundColor="Transparent" TextColor="Black"/>
                 </StackLayout>
             </StackLayout>
-
+            </ScrollView>
         </ContentView>
 
         <ContentView x:Name="tollbarMenu"  BackgroundColor="#FFFFFFFF" IsVisible="False" VerticalOptions="StartAndExpand" HorizontalOptions="EndAndExpand" AbsoluteLayout.LayoutBounds="1,0,.5,.5" AbsoluteLayout.LayoutFlags="All">
