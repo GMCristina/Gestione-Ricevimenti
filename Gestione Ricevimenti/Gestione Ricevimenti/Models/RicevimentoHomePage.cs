@@ -17,6 +17,8 @@ namespace Gestione_Ricevimenti
             this.corso = corso;
             this.stato = stato;
             this.oggetto = oggetto;
+
+          
         }
 
         public string id_ricevimento { get; set; }
@@ -67,7 +69,7 @@ namespace Gestione_Ricevimenti
         {
             get
             {
-                if (nome != null && cognome != null)
+                if (!stato.Equals("0"))
                     return nome + " " + cognome;
                 else
                     return "Nessuno studente";
@@ -81,6 +83,10 @@ namespace Gestione_Ricevimenti
                 return inizio + " : " + fine;
             }
         }
+
+       
+        
+
 
 
     }

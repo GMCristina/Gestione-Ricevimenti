@@ -24,7 +24,7 @@
 
     <AbsoluteLayout>
         <StackLayout Orientation="Vertical" Spacing="5"  AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,1,1,1"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-            <Picker  x:Name="pickerStato"  SelectedItem="{Binding categoria}" Title="Seleziona la categoria: " Margin="5,5" VerticalOptions="Start" HorizontalOptions="CenterAndExpand"  FontSize="Medium">
+            <Picker  x:Name="pickerStato" SelectedIndexChanged="ChangePickerStato" Title="Seleziona la categoria: " Margin="5,5" VerticalOptions="Start" HorizontalOptions="CenterAndExpand"  FontSize="Medium">
                 <Picker.Items>
                     <x:String>Tutti</x:String>
                     <x:String>Liberi</x:String>
@@ -42,8 +42,8 @@
                     BindingContext="RicevimentoHomePageResp"
                     SelectionMode="None"
                     IsGroupingEnabled="True"
-                 
-                     
+                    ItemTapped="EventDetail"
+               
                    >
                 <ListView.GroupHeaderTemplate>
                     <DataTemplate>
@@ -77,34 +77,32 @@
         <ContentView x:Name="popupProfEvent"  BackgroundColor="#C0808080" IsVisible="False" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
             <ScrollView>
                 <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,1,.5,1"  VerticalOptions="CenterAndExpand" BackgroundColor="White" Margin="20,20" Orientation="Vertical" Spacing="10">
-                    <StackLayout VerticalOptions="StartAndExpand"  Margin="30,30, 30, 10" Orientation="Horizontal">
-                        <Label   Text="Studente : " HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
-                        <Label x:Name="dataStudente"   HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
+                    <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Margin="5,15, 5, 0" Orientation="Vertical">
+                        <Label  x:Name="labelStudente" BackgroundColor="{StaticResource Grigio}" Text="Studente : " TextColor="Black" FontSize="Medium" HorizontalTextAlignment="Start" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" />
+                        <Label x:Name="dataStudente"  FontSize="Medium"  HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
+
+
+                        <Label x:Name="labelCorso" BackgroundColor="{StaticResource Grigio}" Text="Corso :" TextColor="Black" FontSize="Medium" HorizontalTextAlignment="Start" HorizontalOptions="FillAndExpand"  VerticalOptions="StartAndExpand" />
+                        <Label x:Name="dataCorso"  FontSize="Medium" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
+
+                        <Label x:Name="labelData" BackgroundColor="{StaticResource Grigio}" Text="Data :" TextColor="Black" FontSize="Medium" HorizontalTextAlignment="Start" HorizontalOptions="FillAndExpand"  VerticalOptions="StartAndExpand" />
+                        <Label x:Name="dataData"  FontSize="Medium" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
+
+                        <Label x:Name="labelInizio" BackgroundColor="{StaticResource Grigio}" Text="Inizio :" TextColor="Black" FontSize="Medium" HorizontalTextAlignment="Start" HorizontalOptions="FillAndExpand"  VerticalOptions="StartAndExpand" />
+                        <Label x:Name="dataInizio"  FontSize="Medium" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
+
+                        <Label x:Name="labelFine" BackgroundColor="{StaticResource Grigio}" Text="Fine :" TextColor="Black" FontSize="Medium" HorizontalTextAlignment="Start" HorizontalOptions="FillAndExpand"  VerticalOptions="StartAndExpand" />
+                        <Label x:Name="dataFine"  FontSize="Medium" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
+
+                        <Label x:Name="labelOggetto" BackgroundColor="{StaticResource Grigio}"  Text="Oggetto :" TextColor="Black" FontSize="Medium" HorizontalTextAlignment="Start" HorizontalOptions="FillAndExpand"  VerticalOptions="StartAndExpand" />
+                        <Label x:Name="dataOggetto"  FontSize="Medium" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
+                        
                     </StackLayout>
-                    <StackLayout VerticalOptions="StartAndExpand"  Margin="30,10" Orientation="Horizontal">
-                        <Label x:Name="labelCorso"  Text="Corso :" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
-                        <Label x:Name="dataCorso"  Text="Matricola" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
-                    </StackLayout>
-                    <StackLayout VerticalOptions="StartAndExpand"  Margin="30,10" Orientation="Horizontal">
-                        <Label x:Name="labelData"  Text="Data :" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
-                        <Label x:Name="dataData"  Text="Matricola" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
-                    </StackLayout>
-                    <StackLayout VerticalOptions="StartAndExpand"  Margin="30,10" Orientation="Horizontal">
-                        <Label x:Name="labelInizio" Text="Inizio :" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
-                        <Label x:Name="dataInizio"  Text="Matricola" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
-                    </StackLayout>
-                    <StackLayout VerticalOptions="StartAndExpand"  Margin="30,10" Orientation="Horizontal">
-                        <Label x:Name="labelFine" Text="Fine :" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
-                        <Label x:Name="dataFine"  Text="Matricola" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
-                    </StackLayout>
-                    <StackLayout VerticalOptions="StartAndExpand"  Margin="30,10" Orientation="Horizontal">
-                        <Label x:Name="labelOggetto"  Text="Oggetto :" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
-                        <Label x:Name="dataOggetto"  Text="Matricola" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
-                    </StackLayout>
-                    <StackLayout VerticalOptions="StartAndExpand"  Margin="30,10" Orientation="Horizontal">
-                        <Button Text="Conferma"  HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" BackgroundColor="Transparent" TextColor="Green"/>
-                        <Button Text="Rifuta"  HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand" BackgroundColor="Transparent" TextColor="{StaticResource colorAccent}"/>
-                        <Button Text="Fine"  HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" BackgroundColor="Transparent" TextColor="Black"/>
+                    <StackLayout VerticalOptions="StartAndExpand"  Margin="20,10" Orientation="Horizontal">
+                        <Button x:Name="Elimina" Text="Elimina" Clicked="EliminaClick" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" BackgroundColor="Transparent" TextColor="{StaticResource colorAccent}"/>
+                        <Button x:Name="Conferma" Text="Conferma" Clicked="ConfermaClick" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" BackgroundColor="Transparent" TextColor="Green"/>
+                        <Button x:Name="Rifiuta" Text="Rifuta" Clicked="RifiutaClick" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" BackgroundColor="Transparent" TextColor="{StaticResource colorAccent}"/>
+                        <Button x:Name="Fine" Text="Fine" Clicked="FineClick" HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" BackgroundColor="Transparent" TextColor="Black"/>
                     </StackLayout>
                 </StackLayout>
             </ScrollView>

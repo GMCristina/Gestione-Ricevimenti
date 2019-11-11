@@ -98,7 +98,7 @@ namespace Gestione_Ricevimenti
 
             id_ricevimento = ((RicevimentoHomePage)e.Item).id_ricevimento;
             ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/ricevimento.php?id_ricevimento=" + id_ricevimento);
-            request.DownloadEventDetail();
+            request.DownloadEventDetail(true);
 
         }
 

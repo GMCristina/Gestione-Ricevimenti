@@ -85,7 +85,7 @@ namespace Gestione_Ricevimenti
             
         }
 
-        public async void DownloadEventDetail()
+        public async void DownloadEventDetail(bool flag)
         {
            
 
@@ -101,7 +101,14 @@ namespace Gestione_Ricevimenti
 
                     events.Add(new RicevimentoHomePage(elem.Value.id_ricevimento, elem.Value.nome, elem.Value.cognome, elem.Value.giorno, elem.Value.inizio, elem.Value.fine, elem.Value.corso, elem.Value.stato, elem.Value.oggetto));
                 }
-                ((StudentHomePage)mainPage).WriteDetail(events[0]);
+                if (flag)
+                {
+                    ((StudentHomePage)mainPage).WriteDetail(events[0]);
+                }
+                else
+                {
+                    ((ProfHomePage)mainPage).WriteDetail(events[0]);
+                }
             }
             else
                 Debug.WriteLine("Nothing retrieved from server.");
@@ -316,8 +323,9 @@ namespace Gestione_Ricevimenti
 
                         events.Add(new RicevimentoHomePage(elem.Value.id_ricevimento, elem.Value.nome, elem.Value.cognome, elem.Value.giorno, elem.Value.inizio, elem.Value.fine, elem.Value.corso, elem.Value.stato, elem.Value.oggetto));
                     }
-                    ((ProfHomePage)mainPage).fillListProfHomePage(events);
-                }
+                   ((ProfHomePage)mainPage).fillListProfHomePage(events,true);
+                   
+            }
                 else
                     Debug.WriteLine("Nothing retrieved from server.");
 
@@ -325,7 +333,31 @@ namespace Gestione_Ricevimenti
 
             }
 
+        public async void HandleEvent()
+        {
+            var response = await _client.GetAsync(URL);
+            if (response.IsSuccessStatusCode)
+            {
+                var result = response.Content.ReadAsStringAsync().Result.ToString();
+                string res = JsonConvert.DeserializeObject<string>(result);
+                if (res.Equals("-1"))
+                {
+                    DependencyService.Get<IMessage>().ShortAlert("Errore: operazione fallita");
+                }
+                else
+                {
+                    DependencyService.Get<IMessage>().ShortAlert("Operazione eseguita!");
+
+
+                    ((ProfHomePage)mainPage).Refresh(null,null);
+
+                }
+            }
+            else
+                Debug.WriteLine("Nothing retrieved from server.");
         }
+
+    }
 
     
 }

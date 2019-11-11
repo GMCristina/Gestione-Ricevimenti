@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,9 @@ namespace Gestione_Ricevimenti
 	public partial class ProfHomePage : ContentPage
 	{
         string categoria { set; get; }
+        string id_ricevimento;
+        List<RicevimentoHomePage> lista;
+        List<GroupedRicevimento> listaGrouped;
 
 		public ProfHomePage ()
         {
@@ -52,8 +56,9 @@ namespace Gestione_Ricevimenti
 
         }
 
-        protected async void Refresh(object sender, EventArgs e)
+        public async void Refresh(object sender, EventArgs e)
         {
+            pickerStato.SelectedIndex = 0;
             string id = Application.Current.Properties["id_utente"].ToString();
             ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti_prof.php?" + "id_professore=" + id);
             request.DownloadSlotProf();
@@ -73,8 +78,14 @@ namespace Gestione_Ricevimenti
         }
 
 
-        public void fillListProfHomePage(List<RicevimentoHomePage> list)
+        public void fillListProfHomePage(List<RicevimentoHomePage> list, bool ModificaSource)
         {
+            
+
+            if (ModificaSource)
+            {
+                lista = list;
+            }
 
             List<GroupedRicevimento> l = new List<GroupedRicevimento>();
 
@@ -105,6 +116,11 @@ namespace Gestione_Ricevimenti
 
                 ricevimenti.ItemsSource = l;
 
+                if (ModificaSource)
+                {
+                    listaGrouped = l;
+                }
+
             }
             else
             {
@@ -117,6 +133,219 @@ namespace Gestione_Ricevimenti
         {
             await Navigation.PushAsync(new ProfInsertSlotPage());
 
+
+        }
+
+        private void ChangePickerStato(object sender, EventArgs e)
+        {
+            
+
+            List<GroupedRicevimento> l = new List<GroupedRicevimento>();
+
+            categoria = pickerStato.SelectedItem.ToString();
+
+            string cat = "";
+
+            switch (categoria)
+            {
+                case "Tutti": cat = categoria; break;
+                case "Liberi": cat = "Libero"; break;
+                case "Prenotati": cat = "Prenotato"; break;
+                case "Richiesti": cat = "Richiesto"; break;
+                case "Approvati": cat = "Approvato"; break;
+                case "Eliminati": cat = "Eliminato"; break;
+
+            }
+
+            if (lista!=null)
+            {
+                
+
+                if (cat.Equals("Tutti"))
+                {
+                    ricevimenti.ItemsSource = listaGrouped;
+
+                }
+                else
+                {
+                    List<RicevimentoHomePage> l1 = new List<RicevimentoHomePage>();
+
+                    foreach (RicevimentoHomePage elem in lista)
+                    {
+                        if(cat.Equals(elem.stato_stringa))
+                        {
+                            l1.Add(elem);
+                        }
+                        
+                    }
+
+                    fillListProfHomePage(l1,false);
+
+                   
+                }
+
+
+            }
+            else
+            {
+
+                ricevimenti.ItemsSource = null;
+            }
+
+
+
+        }
+
+
+        public void EventDetail(object sender, ItemTappedEventArgs e)
+        {
+
+            id_ricevimento = ((RicevimentoHomePage)e.Item).id_ricevimento;
+            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/ricevimento.php?id_ricevimento=" + id_ricevimento);
+            request.DownloadEventDetail(false);
+
+        }
+
+
+        public void WriteDetail(RicevimentoHomePage r)
+        {
+
+            switch (r.stato)
+            {
+                case "0":
+                    labelStudente.IsVisible = false;
+                    dataStudente.IsVisible= false;
+                    labelCorso.IsVisible=false;
+                    dataCorso.IsVisible = false;
+                    labelOggetto.IsVisible = false;
+                    dataOggetto.IsVisible = false;
+                    Conferma.IsVisible = false;
+                    Rifiuta.IsVisible = false;
+
+                    Elimina.IsVisible = true;
+                    Fine.IsVisible = true;
+                    break;
+
+                case "1":
+                    Conferma.IsVisible = false;
+                    Rifiuta.IsVisible = false;
+
+                    Elimina.IsVisible = true;
+                    Fine.IsVisible = true;
+                    labelStudente.IsVisible = true;
+                    dataStudente.IsVisible = true;
+                    labelCorso.IsVisible = true;
+                    dataCorso.IsVisible = true;
+                    labelOggetto.IsVisible = true;
+                    dataOggetto.IsVisible = true;
+
+                    break;
+
+                case "2":
+                    Elimina.IsVisible = false;
+
+                    Conferma.IsVisible = true;
+                    Rifiuta.IsVisible = true;
+                    Fine.IsVisible = true;
+                    labelStudente.IsVisible = true;
+                    dataStudente.IsVisible = true;
+                    labelCorso.IsVisible = true;
+                    dataCorso.IsVisible = true;
+                    labelOggetto.IsVisible = true;
+                    dataOggetto.IsVisible = true;
+
+
+                    break;
+
+                case "3":
+                    Conferma.IsVisible = false;
+                    Rifiuta.IsVisible = false;
+                    break;
+
+                case "4":
+                    Conferma.IsVisible = false;
+                    Rifiuta.IsVisible = false;
+                    Elimina.IsVisible = true;
+                    Fine.IsVisible = true;
+
+                    labelStudente.IsVisible = true;
+                    dataStudente.IsVisible = true;
+                    labelCorso.IsVisible = true;
+                    dataCorso.IsVisible = true;
+                    labelOggetto.IsVisible = true;
+                    dataOggetto.IsVisible = true;
+
+                    break;
+                case "5":
+                    Conferma.IsVisible = false;
+                    Rifiuta.IsVisible = false;
+                    Elimina.IsVisible = true;
+                    Fine.IsVisible = true;
+
+                    labelStudente.IsVisible = true;
+                    dataStudente.IsVisible = true;
+                    labelCorso.IsVisible = true;
+                    dataCorso.IsVisible = true;
+                    labelOggetto.IsVisible = true;
+                    dataOggetto.IsVisible = true;
+                    break;
+
+                case "6":
+                    Conferma.IsVisible = false;
+                    Rifiuta.IsVisible = false;
+                    break;
+
+                default:
+                    break;
+            }
+            
+
+            dataData.Text = r.giorno;
+            dataInizio.Text = r.inizio;
+            dataFine.Text = r.fine;
+
+            dataStudente.Text = r.nome_cognome;
+            dataCorso.Text = r.corso;
+           
+            dataOggetto.Text = r.oggetto;
+
+
+            popupProfEvent.IsVisible = true;
+
+        }
+
+        public void FineClick(object sender, ItemTappedEventArgs e)
+        {
+
+            popupProfEvent.IsVisible = false;
+
+        }
+
+        public void EliminaClick(object sender, ItemTappedEventArgs e)
+        {
+            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/gestione_ricevimento.php?" + "id=" + id_ricevimento + "&azione=" + "Elimina");
+            request.HandleEvent();
+
+
+            popupProfEvent.IsVisible = false;
+
+        }
+
+        public void RifiutaClick(object sender, ItemTappedEventArgs e)
+        {
+            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/gestione_ricevimento.php?" + "id=" + id_ricevimento + "&azione=" + "Rifiuta");
+            request.HandleEvent();
+
+            popupProfEvent.IsVisible = false;
+
+        }
+
+        public void ConfermaClick(object sender, ItemTappedEventArgs e)
+        {
+            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/gestione_ricevimento.php?" + "id=" + id_ricevimento + "&azione=" + "Conferma");
+            request.HandleEvent();
+
+            popupProfEvent.IsVisible = false;
 
         }
     }
