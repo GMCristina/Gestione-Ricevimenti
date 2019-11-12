@@ -13,13 +13,17 @@ namespace Gestione_Ricevimenti
 	public partial class StudentHomePage : ContentPage
 	{
         public string id_ricevimento;
+       
 
 		public StudentHomePage ()
 		{
             
 
-            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti.php?");
-            request.DownloadEvent();
+            if (CheckConnection.CheckInternetConnection(this))
+            {
+                ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti.php?");
+                request.DownloadEvent();
+            }
             
 
             List<MenuToolbar> MenuItems = new List<MenuToolbar>
@@ -38,8 +42,11 @@ namespace Gestione_Ricevimenti
         {
             base.OnAppearing();
 
-            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti.php?");
-            request.DownloadEvent();
+            if (CheckConnection.CheckInternetConnection(this))
+            {
+                ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti.php?");
+                request.DownloadEvent();
+            }
 
         }
 
@@ -71,13 +78,16 @@ namespace Gestione_Ricevimenti
 
         protected async void Home(object sender, EventArgs e)
         {
-           
+            CheckConnection.CheckInternetConnection(this);
         }
 
         protected async void Refresh(object sender, EventArgs e)
         {
-            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti.php?");
-            request.DownloadEvent();
+            if (CheckConnection.CheckInternetConnection(this))
+            {
+                ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti.php?");
+                request.DownloadEvent();
+            }
         }
 
         protected async void Info(object sender, EventArgs e)
@@ -95,10 +105,12 @@ namespace Gestione_Ricevimenti
 
         public void EventDetail(object sender, ItemTappedEventArgs e)
         {
-
-            id_ricevimento = ((RicevimentoHomePage)e.Item).id_ricevimento;
-            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/ricevimento.php?id_ricevimento=" + id_ricevimento);
-            request.DownloadEventDetail(true);
+            if (CheckConnection.CheckInternetConnection(this))
+            {
+                id_ricevimento = ((RicevimentoHomePage)e.Item).id_ricevimento;
+                ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/ricevimento.php?id_ricevimento=" + id_ricevimento);
+                request.DownloadEventDetail(true);
+            }
 
         }
 
@@ -140,10 +152,13 @@ namespace Gestione_Ricevimenti
             var answer =  await DisplayAlert("Cancella Prenotazione","Confermi di voler cancellare definitivamente la prenotazione effettuata?", "Sì", "No");
             if (answer)
             {
-                ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/cancella_ricevimento.php?id=" + id_ricevimento);
-                request.DeleteEvent();
+                if (CheckConnection.CheckInternetConnection(this))
+                {
+                    ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/cancella_ricevimento.php?id=" + id_ricevimento);
+                    request.DeleteEvent();
 
-                popupStudentEvent.IsVisible = false;
+                    popupStudentEvent.IsVisible = false;
+                }
              
             }
 
@@ -151,7 +166,10 @@ namespace Gestione_Ricevimenti
 
         protected async void BookSlot(object sender, EventArgs args)
         {
-            await Navigation.PushAsync(new StudentBookSlotPage());
+            if (CheckConnection.CheckInternetConnection(this))
+            {
+                await Navigation.PushAsync(new StudentBookSlotPage());
+            }
         
 
         }

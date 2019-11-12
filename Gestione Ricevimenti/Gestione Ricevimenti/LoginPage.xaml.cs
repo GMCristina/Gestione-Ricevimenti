@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using System.Diagnostics;
+using Xamarin.Essentials;
 
 namespace Gestione_Ricevimenti
 {
@@ -21,8 +22,11 @@ namespace Gestione_Ricevimenti
         {
             if (username.Text != null && password.Text != null)
             {
-                ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/login.php");
-                request.LoginRequest(username.Text, password.Text);
+                if (CheckConnection.CheckInternetConnection(this)) {
+                    ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/login.php");
+                    request.LoginRequest(username.Text, password.Text);
+                }
+                
             }
         }
 

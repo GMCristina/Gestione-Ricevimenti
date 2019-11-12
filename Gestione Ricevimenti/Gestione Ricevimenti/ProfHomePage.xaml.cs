@@ -21,14 +21,32 @@ namespace Gestione_Ricevimenti
 		public ProfHomePage ()
         {
             string id = Application.Current.Properties["id_utente"].ToString();
-            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti_prof.php?" + "id_professore=" + id);
-            request.DownloadSlotProf();
+
+            if (CheckConnection.CheckInternetConnection(this))
+            {
+                ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti_prof.php?" + "id_professore=" + id);
+                request.DownloadSlotProf();
+            }
 
             InitializeComponent ();
 
             pickerStato.SelectedIndex = 0;
             categoria = pickerStato.SelectedItem.ToString();
 		}
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            pickerStato.SelectedIndex = 0;
+            string id = Application.Current.Properties["id_utente"].ToString();
+            if (CheckConnection.CheckInternetConnection(this))
+            {
+                ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti_prof.php?" + "id_professore=" + id);
+                request.DownloadSlotProf();
+            }
+
+        }
 
 
         protected async void Logout(object sender, EventArgs args)
@@ -60,8 +78,12 @@ namespace Gestione_Ricevimenti
         {
             pickerStato.SelectedIndex = 0;
             string id = Application.Current.Properties["id_utente"].ToString();
-            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti_prof.php?" + "id_professore=" + id);
-            request.DownloadSlotProf();
+
+            if (CheckConnection.CheckInternetConnection(this))
+            {
+                ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti_prof.php?" + "id_professore=" + id);
+                request.DownloadSlotProf();
+            }
         }
 
         protected async void Info(object sender, EventArgs e)
@@ -201,8 +223,11 @@ namespace Gestione_Ricevimenti
         {
 
             id_ricevimento = ((RicevimentoHomePage)e.Item).id_ricevimento;
-            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/ricevimento.php?id_ricevimento=" + id_ricevimento);
-            request.DownloadEventDetail(false);
+            if (CheckConnection.CheckInternetConnection(this))
+            {
+                ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/ricevimento.php?id_ricevimento=" + id_ricevimento);
+                request.DownloadEventDetail(false);
+            }
 
         }
 
@@ -323,8 +348,11 @@ namespace Gestione_Ricevimenti
 
         public void EliminaClick(object sender, ItemTappedEventArgs e)
         {
-            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/gestione_ricevimento.php?" + "id=" + id_ricevimento + "&azione=" + "Elimina");
-            request.HandleEvent();
+            if (CheckConnection.CheckInternetConnection(this))
+            {
+                ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/gestione_ricevimento.php?" + "id=" + id_ricevimento + "&azione=" + "Elimina");
+                request.HandleEvent();
+            }
 
 
             popupProfEvent.IsVisible = false;
@@ -333,8 +361,11 @@ namespace Gestione_Ricevimenti
 
         public void RifiutaClick(object sender, ItemTappedEventArgs e)
         {
-            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/gestione_ricevimento.php?" + "id=" + id_ricevimento + "&azione=" + "Rifiuta");
-            request.HandleEvent();
+            if (CheckConnection.CheckInternetConnection(this))
+            {
+                ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/gestione_ricevimento.php?" + "id=" + id_ricevimento + "&azione=" + "Rifiuta");
+                request.HandleEvent();
+            }
 
             popupProfEvent.IsVisible = false;
 
@@ -342,8 +373,11 @@ namespace Gestione_Ricevimenti
 
         public void ConfermaClick(object sender, ItemTappedEventArgs e)
         {
-            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/gestione_ricevimento.php?" + "id=" + id_ricevimento + "&azione=" + "Conferma");
-            request.HandleEvent();
+            if (CheckConnection.CheckInternetConnection(this))
+            {
+                ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/gestione_ricevimento.php?" + "id=" + id_ricevimento + "&azione=" + "Conferma");
+                request.HandleEvent();
+            }
 
             popupProfEvent.IsVisible = false;
 

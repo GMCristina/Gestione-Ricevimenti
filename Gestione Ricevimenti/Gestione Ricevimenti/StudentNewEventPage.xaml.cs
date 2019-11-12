@@ -28,8 +28,11 @@ namespace Gestione_Ricevimenti
             nome_cognome_prof = docente;
 
             string id_studente = Application.Current.Properties["id_utente"].ToString();
-            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_corsi_studente_docente.php?" + "id_studente=" + id_studente + "&id_professore=" + id_professore);
-            request.DownloadSpinnerCorso(false);
+            if (CheckConnection.CheckInternetConnection(this))
+            {
+                ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_corsi_studente_docente.php?" + "id_studente=" + id_studente + "&id_professore=" + id_professore);
+                request.DownloadSpinnerCorso(false);
+            }
 
             InitializeComponent ();
 
@@ -41,6 +44,9 @@ namespace Gestione_Ricevimenti
 
             pickerDurata.SelectedIndex = 0;
             durata = pickerDurata.SelectedItem.ToString();
+
+           
+            
 
             oggetto = "";
 
@@ -77,9 +83,11 @@ namespace Gestione_Ricevimenti
 
                 string inizioMod = inizio.Hours + ":" + inizio.Minutes;
 
-                 ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/richiesta_nuovo_ricevimento.php");
-                 request.SlotRequest(id_professore, id_corso, giorno.ToShortDateString(), inizioMod, durata, oggetto);
-              
+                if (CheckConnection.CheckInternetConnection(this))
+                {
+                    ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/richiesta_nuovo_ricevimento.php");
+                    request.SlotRequest(id_professore, id_corso, giorno.ToShortDateString(), inizioMod, durata, oggetto);
+                }
             }
             else
             {

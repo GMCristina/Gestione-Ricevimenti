@@ -12,9 +12,74 @@ namespace Gestione_Ricevimenti
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ProfInsertSlotPage : ContentPage
 	{
-		public ProfInsertSlotPage ()
+        public string durata { set; get; }
+        public string durataSlot { get; set; }
+        public DateTime giorno { set; get; }
+        public TimeSpan inizio { set; get; }
+
+        public ProfInsertSlotPage ()
 		{
-			InitializeComponent ();
-		}
-	}
+            BindingContext = this;
+
+            InitializeComponent ();
+
+            pickerDurata.SelectedIndex = 0;
+            pickerDurataSlot.SelectedIndex = 0;
+
+            durata = pickerDurata.SelectedItem.ToString();
+            durataSlot = pickerDurataSlot.SelectedItem.ToString();
+
+        
+
+
+            Timepick.Time = DateTime.Now.TimeOfDay;
+            inizio = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, 00);
+            Datepick.Date = DateTime.Now.Date;
+            Datepick.MinimumDate = DateTime.Now.Date;
+            giorno = DateTime.Now.Date;
+
+        }
+
+        public async void AnnullaClick(object sender, EventArgs args)
+        {
+
+            await Navigation.PopAsync();
+        }
+
+        protected async void InserisciClick (object sender, EventArgs args)
+        {
+            if ( giorno != null && inizio != null && durata != null && durataSlot!=null)
+            {
+
+                String[] st = durata.Split(' ');
+                if (st[1].Equals("h"))
+                    durata = ((Convert.ToInt32(st[0])) * 60).ToString();
+                else
+                    durata = st[0];
+
+                st = durataSlot.Split(' ');
+                if (st[1].Equals("h"))
+                    durataSlot = ((Convert.ToInt32(st[0])) * 60).ToString();
+                else
+                    durataSlot = st[0];
+
+
+
+                string inizioMod = inizio.Hours + ":" + inizio.Minutes;
+                string giornoMod = giorno.Day + "-" + giorno.Month + "-" + giorno.Year;
+                // giorno.ToShortDateString()
+                if (CheckConnection.CheckInternetConnection(this))
+                {
+                    ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/inserimento_slot.php");
+                    request.InsertSlot(giornoMod, inizioMod, durata, durataSlot);
+                }
+            }
+            else
+            {
+                DependencyService.Get<IMessage>().ShortAlert("Richiesta fallita: dati mancanti");
+            }
+        }
+
+
+    }
 }

@@ -357,7 +357,49 @@ namespace Gestione_Ricevimenti
                 Debug.WriteLine("Nothing retrieved from server.");
         }
 
+        public async void InsertSlot( string data, string inizio, string durata, string durataSlot)
+        {
+            string id_docente = Application.Current.Properties["id_utente"].ToString();
+
+            HttpContent formcontent = new FormUrlEncodedContent(new[] {
+
+                new KeyValuePair<string,string>("id_docente",id_docente),
+
+                new KeyValuePair<string,string>("data",data),
+                new KeyValuePair<string,string>("inizio",inizio),
+                new KeyValuePair<string,string>("durata",durata),
+                new KeyValuePair<string,string>("durata_slot",durataSlot),
+
+            });
+
+            var response = await _client.PostAsync(URL, formcontent);
+            if (response.IsSuccessStatusCode)
+            {
+                string result = response.Content.ReadAsStringAsync().Result.ToString();
+                string res = JsonConvert.DeserializeObject<string>(result);
+                switch (res)
+                {
+                    case "1":
+                        DependencyService.Get<IMessage>().ShortAlert("Inserimento effettuato correttamente");
+                        mainPage.Navigation.PopAsync();
+                        break;
+                    case "-1":
+                        DependencyService.Get<IMessage>().ShortAlert("Inserimento fallito: riprova");
+                        break;
+
+                    default:
+                        break;
+
+                }
+            }
+            else
+            {
+                DependencyService.Get<IMessage>().ShortAlert("Richiesta fallita, riprova");
+            }
+        }
+
+
     }
 
-    
+
 }

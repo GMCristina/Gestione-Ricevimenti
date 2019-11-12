@@ -19,9 +19,11 @@ namespace Gestione_Ricevimenti
 
 		 public StudentBookSlotPage ()
 		{
-           
-            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/professori.php?");
-            request.DownloadSpinnerDocente();
+            if (CheckConnection.CheckInternetConnection(this))
+            {
+                ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/professori.php?");
+                request.DownloadSpinnerDocente();
+            }
 
             InitializeComponent();
   
@@ -31,20 +33,28 @@ namespace Gestione_Ricevimenti
         {
             base.OnAppearing();
 
-            
+            if (CheckConnection.CheckInternetConnection(this))
+            {
+                ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/professori.php?");
+                request.DownloadSpinnerDocente();
+            }
+
         }
 
         public void fillSpinnerDocente(List<Docente> docenti)
         {
             id_professore = docenti.First().id_professore;
             nome_cognome_prof = docenti.First().nome_cognome;
-            
-            ServerRequest request1 = new ServerRequest(this, "http://pmapp.altervista.org/ricevimenti_liberi.php?id_professore=" + id_professore);
-            request1.DownloadSlot();
 
-            pickerDocente.ItemsSource = docenti;
+            if (CheckConnection.CheckInternetConnection(this))
+            {
+                ServerRequest request1 = new ServerRequest(this, "http://pmapp.altervista.org/ricevimenti_liberi.php?id_professore=" + id_professore);
+                request1.DownloadSlot();
 
-            pickerDocente.SelectedIndex = 0;
+                pickerDocente.ItemsSource = docenti;
+
+                pickerDocente.SelectedIndex = 0;
+            }
 
         }
 
@@ -97,8 +107,11 @@ namespace Gestione_Ricevimenti
 
             id_professore = ((Docente)picker.SelectedItem).id_professore;
 
-            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/ricevimenti_liberi.php?id_professore=" + id_professore);
-            request.DownloadSlot();
+            if (CheckConnection.CheckInternetConnection(this))
+            {
+                ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/ricevimenti_liberi.php?id_professore=" + id_professore);
+                request.DownloadSlot();
+            }
 
         }
 
@@ -143,8 +156,11 @@ namespace Gestione_Ricevimenti
 
         protected async void Refresh(object sender, EventArgs e)
         {
-            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/ricevimenti_liberi.php?id_professore=" + id_professore);
-            request.DownloadSlot();
+            if (CheckConnection.CheckInternetConnection(this))
+            {
+                ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/ricevimenti_liberi.php?id_professore=" + id_professore);
+                request.DownloadSlot();
+            }
         }
 
         protected async void Info(object sender, EventArgs e)
@@ -165,15 +181,14 @@ namespace Gestione_Ricevimenti
             string id_studente = Application.Current.Properties["id_utente"].ToString();
 
             if (id_ricevimento!=null && id_professore!=null && id_corso!=null) {
-                ServerRequest request = new ServerRequest(this, ("http://pmapp.altervista.org/prenota_slot.php?" + "id_studente=" + id_studente + "&id_corso=" + id_corso + "&id_ricevimento=" + id_ricevimento + "&id_docente=" + id_professore + "&oggetto=" + Oggetto.Text));
-                request.BookSlot(id_professore);
-
-              //  ServerRequest request2 = new ServerRequest(this, "http://pmapp.altervista.org/ricevimenti_liberi.php?id_professore=" + id_professore);
-               // request2.DownloadSlot();
-
+                if (CheckConnection.CheckInternetConnection(this))
+                {
+                    ServerRequest request = new ServerRequest(this, ("http://pmapp.altervista.org/prenota_slot.php?" + "id_studente=" + id_studente + "&id_corso=" + id_corso + "&id_ricevimento=" + id_ricevimento + "&id_docente=" + id_professore + "&oggetto=" + Oggetto.Text));
+                    request.BookSlot(id_professore);
 
 
-                popupBookSlot.IsVisible = false;
+                    popupBookSlot.IsVisible = false;
+                }
             }
             else
             {
@@ -203,8 +218,11 @@ namespace Gestione_Ricevimenti
             id_ricevimento = ((Slot)e.Item).id_ricevimento;
             string id_studente = Application.Current.Properties["id_utente"].ToString();
 
-            ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_corsi_studente_docente.php?" + "id_studente=" + id_studente + "&id_professore=" + id_professore);
-            request.DownloadSpinnerCorso(true);
+            if (CheckConnection.CheckInternetConnection(this))
+            {
+                ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_corsi_studente_docente.php?" + "id_studente=" + id_studente + "&id_professore=" + id_professore);
+                request.DownloadSpinnerCorso(true);
+            }
 
             popupBookSlot.IsVisible = true;
 

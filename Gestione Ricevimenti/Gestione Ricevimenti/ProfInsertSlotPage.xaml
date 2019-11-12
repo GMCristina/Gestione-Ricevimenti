@@ -1,12 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Gestione_Ricevimenti.ProfInsertSlotPage">
+             x:Class="Gestione_Ricevimenti.ProfInsertSlotPage"
+             Title="Gestione Ricevimenti"
+             NavigationPage.HasBackButton="False">
+
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <ScrollView>
+            <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Orientation="Vertical" Margin="5,0" Spacing="3" Padding="0">
+                <StackLayout VerticalOptions="Start" Orientation="Horizontal" Margin="30,10,30,0">
+                    <Button Text="Annulla" Clicked="AnnullaClick" HorizontalOptions="StartAndExpand" VerticalOptions="Start" BackgroundColor="Transparent" TextColor="{StaticResource colorAccent}"/>
+                    <Button Text="Inserisci" Clicked="InserisciClick" HorizontalOptions="EndAndExpand" VerticalOptions="Start"  BackgroundColor="Transparent" TextColor="Black"/>
+                </StackLayout>
+
+                <Label Text="Data : " TextColor="Black" FontSize="Medium" BackgroundColor="{StaticResource Grigio}" VerticalOptions="Start" HorizontalOptions="FillAndExpand"/>
+                <DatePicker x:Name="Datepick"  Format="dd/MM/yyyy" Date="{Binding giorno}"   VerticalOptions="Start" HorizontalOptions="EndAndExpand" />
+                <Label Text="Inizio : " TextColor="Black" FontSize="Medium" BackgroundColor="{StaticResource Grigio}" VerticalOptions="Start" HorizontalOptions="FillAndExpand"/>
+                <TimePicker x:Name="Timepick"  Format="HH:mm" Time="{Binding inizio}" VerticalOptions="Start" HorizontalOptions="EndAndExpand"/>
+                <Label Text="Durata : " TextColor="Black" FontSize="Medium" BackgroundColor="{StaticResource Grigio}" VerticalOptions="Start" HorizontalOptions="FillAndExpand"/>
+                <Picker  x:Name="pickerDurata" SelectedItem="{Binding durata}"  Title="Seleziona la durata : " VerticalOptions="Start" HorizontalOptions="FillAndExpand"  FontSize="Medium">
+                    <Picker.Items>
+                        <x:String>30 min</x:String>
+                        <x:String>1 h</x:String>
+                        <x:String>1.5 h</x:String>
+                        <x:String>2 h</x:String>
+                        <x:String>2.5 h</x:String>
+                        <x:String>3 h</x:String>
+                        <x:String>3.5 h</x:String>
+                        <x:String>4 h</x:String>
+                    </Picker.Items>
+                </Picker>
+                <Label Text="Durata slot : " TextColor="Black" FontSize="Medium" BackgroundColor="{StaticResource Grigio}" VerticalOptions="Start" HorizontalOptions="FillAndExpand"/>
+                <Picker  x:Name="pickerDurataSlot" SelectedItem="{Binding durataSlot}"  Title="Seleziona la durata : " VerticalOptions="Start" HorizontalOptions="FillAndExpand"  FontSize="Medium">
+                    <Picker.Items>
+                        <x:String>15 min</x:String>
+                        <x:String>30 min</x:String>
+                    </Picker.Items>
+                </Picker>
+               
+
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
