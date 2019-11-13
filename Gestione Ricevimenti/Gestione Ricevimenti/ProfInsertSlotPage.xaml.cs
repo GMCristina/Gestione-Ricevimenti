@@ -50,28 +50,36 @@ namespace Gestione_Ricevimenti
         {
             if ( giorno != null && inizio != null && durata != null && durataSlot!=null)
             {
-
+                string durataMod;
                 String[] st = durata.Split(' ');
                 if (st[1].Equals("h"))
-                    durata = ((Convert.ToInt32(st[0])) * 60).ToString();
+                {
+                    durataMod = ((Convert.ToInt32(st[0])) * 60).ToString();
+                }
                 else
-                    durata = st[0];
+                {
+                    durataMod = st[0];
+                }
 
+                string durataSlotMod;
                 st = durataSlot.Split(' ');
                 if (st[1].Equals("h"))
-                    durataSlot = ((Convert.ToInt32(st[0])) * 60).ToString();
+                {
+                    durataSlotMod = ((Convert.ToInt32(st[0])) * 60).ToString();
+                }
                 else
-                    durataSlot = st[0];
-
+                {
+                    durataSlotMod = st[0];
+                }
 
 
                 string inizioMod = inizio.Hours + ":" + inizio.Minutes;
                 string giornoMod = giorno.Day + "-" + giorno.Month + "-" + giorno.Year;
-                // giorno.ToShortDateString()
+                
                 if (CheckConnection.CheckInternetConnection(this))
                 {
                     ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/inserimento_slot.php");
-                    request.InsertSlot(giornoMod, inizioMod, durata, durataSlot);
+                    request.InsertSlot(giornoMod, inizioMod, durataMod, durataSlotMod);
                 }
             }
             else

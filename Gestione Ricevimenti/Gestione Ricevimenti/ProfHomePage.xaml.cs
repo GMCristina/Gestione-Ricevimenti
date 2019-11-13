@@ -22,11 +22,12 @@ namespace Gestione_Ricevimenti
         {
             string id = Application.Current.Properties["id_utente"].ToString();
 
-            if (CheckConnection.CheckInternetConnection(this))
+           /* if (CheckConnection.CheckInternetConnection(this))
             {
                 ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti_prof.php?" + "id_professore=" + id);
                 request.DownloadSlotProf();
             }
+            */
 
             InitializeComponent ();
 
@@ -44,6 +45,10 @@ namespace Gestione_Ricevimenti
             {
                 ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti_prof.php?" + "id_professore=" + id);
                 request.DownloadSlotProf();
+            }
+            else
+            {
+                ricevimenti.ItemsSource = null;
             }
 
         }
@@ -71,7 +76,7 @@ namespace Gestione_Ricevimenti
 
         protected async void Home(object sender, EventArgs e)
         {
-
+            CheckConnection.CheckInternetConnection(this);
         }
 
         public async void Refresh(object sender, EventArgs e)
@@ -155,65 +160,65 @@ namespace Gestione_Ricevimenti
         {
             await Navigation.PushAsync(new ProfInsertSlotPage());
 
-
         }
 
         private void ChangePickerStato(object sender, EventArgs e)
         {
-            
+     
 
-            List<GroupedRicevimento> l = new List<GroupedRicevimento>();
+                List<GroupedRicevimento> l = new List<GroupedRicevimento>();
 
-            categoria = pickerStato.SelectedItem.ToString();
+                categoria = pickerStato.SelectedItem.ToString();
 
-            string cat = "";
+                string cat = "";
 
-            switch (categoria)
-            {
-                case "Tutti": cat = categoria; break;
-                case "Liberi": cat = "Libero"; break;
-                case "Prenotati": cat = "Prenotato"; break;
-                case "Richiesti": cat = "Richiesto"; break;
-                case "Approvati": cat = "Approvato"; break;
-                case "Eliminati": cat = "Eliminato"; break;
-
-            }
-
-            if (lista!=null)
-            {
-                
-
-                if (cat.Equals("Tutti"))
+                switch (categoria)
                 {
-                    ricevimenti.ItemsSource = listaGrouped;
+                    case "Tutti": cat = categoria; break;
+                    case "Liberi": cat = "Libero"; break;
+                    case "Prenotati": cat = "Prenotato"; break;
+                    case "Richiesti": cat = "Richiesto"; break;
+                    case "Approvati": cat = "Approvato"; break;
+                    case "Eliminati": cat = "Eliminato"; break;
+
+                }
+
+                if (lista != null)
+                {
+
+
+                    if (cat.Equals("Tutti"))
+                    {
+                        ricevimenti.ItemsSource = listaGrouped;
+
+                    }
+                    else
+                    {
+                        List<RicevimentoHomePage> l1 = new List<RicevimentoHomePage>();
+
+                        foreach (RicevimentoHomePage elem in lista)
+                        {
+                            if (cat.Equals(elem.stato_stringa))
+                            {
+                                l1.Add(elem);
+                            }
+
+                        }
+
+                        fillListProfHomePage(l1, false);
+
+
+                    }
+
 
                 }
                 else
                 {
-                    List<RicevimentoHomePage> l1 = new List<RicevimentoHomePage>();
 
-                    foreach (RicevimentoHomePage elem in lista)
-                    {
-                        if(cat.Equals(elem.stato_stringa))
-                        {
-                            l1.Add(elem);
-                        }
-                        
-                    }
-
-                    fillListProfHomePage(l1,false);
-
-                   
+                    ricevimenti.ItemsSource = null;
                 }
 
-
-            }
-            else
-            {
-
-                ricevimenti.ItemsSource = null;
-            }
-
+            
 
 
         }

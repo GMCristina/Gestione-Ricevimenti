@@ -19,11 +19,10 @@ namespace Gestione_Ricevimenti
 
 		 public StudentBookSlotPage ()
 		{
-            if (CheckConnection.CheckInternetConnection(this))
-            {
-                ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/professori.php?");
-                request.DownloadSpinnerDocente();
-            }
+            /*
+              ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/professori.php?");
+              request.DownloadSpinnerDocente();
+            */
 
             InitializeComponent();
   
@@ -142,16 +141,19 @@ namespace Gestione_Ricevimenti
 
         protected async void Home(object sender, EventArgs e)
         {
-            var c = Navigation.NavigationStack.Count();
-
-            for (int i = 0; i < c - 1; i++)
+            if (CheckConnection.CheckInternetConnection(this))
             {
-                Navigation.RemovePage(Navigation.NavigationStack[i]);
+                var c = Navigation.NavigationStack.Count();
 
+                for (int i = 0; i < c - 1; i++)
+                {
+                    Navigation.RemovePage(Navigation.NavigationStack[i]);
+
+                }
+
+                await Navigation.PushAsync(new StudentHomePage());
+                Navigation.RemovePage(this);
             }
-
-            await Navigation.PushAsync(new StudentHomePage());
-            Navigation.RemovePage(this);
         }
 
         protected async void Refresh(object sender, EventArgs e)
@@ -222,9 +224,11 @@ namespace Gestione_Ricevimenti
             {
                 ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_corsi_studente_docente.php?" + "id_studente=" + id_studente + "&id_professore=" + id_professore);
                 request.DownloadSpinnerCorso(true);
+
+                popupBookSlot.IsVisible = true;
             }
 
-            popupBookSlot.IsVisible = true;
+            
 
     }
 
@@ -232,7 +236,10 @@ namespace Gestione_Ricevimenti
 
         private void NuovoRicevimento(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new StudentNewEventPage(id_professore, nome_cognome_prof));
+            if (CheckConnection.CheckInternetConnection(this))
+            {
+                Navigation.PushAsync(new StudentNewEventPage(id_professore, nome_cognome_prof));
+            }
         }
     }
 }

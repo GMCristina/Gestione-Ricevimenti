@@ -19,11 +19,12 @@ namespace Gestione_Ricevimenti
 		{
             
 
-            if (CheckConnection.CheckInternetConnection(this))
+            /* if (CheckConnection.CheckInternetConnection(this))
             {
                 ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti.php?");
                 request.DownloadEvent();
             }
+            */
             
 
             List<MenuToolbar> MenuItems = new List<MenuToolbar>

@@ -28,11 +28,10 @@ namespace Gestione_Ricevimenti
             nome_cognome_prof = docente;
 
             string id_studente = Application.Current.Properties["id_utente"].ToString();
-            if (CheckConnection.CheckInternetConnection(this))
-            {
+
                 ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_corsi_studente_docente.php?" + "id_studente=" + id_studente + "&id_professore=" + id_professore);
                 request.DownloadSpinnerCorso(false);
-            }
+            
 
             InitializeComponent ();
 
@@ -72,12 +71,12 @@ namespace Gestione_Ricevimenti
         {
             if (id_professore != null && id_corso != null && giorno != null && inizio != null && durata != null)
             {
-               
+                string durataMod;
                 String[] st = durata.Split(' ');
                 if (st[1].Equals("h"))    
-                    durata = ((Convert.ToInt32(st[0])) * 60).ToString();
+                    durataMod = ((Convert.ToInt32(st[0])) * 60).ToString();
                 else
-                    durata = st[0];
+                    durataMod = st[0];
 
                 oggetto = Note.Text;
 
