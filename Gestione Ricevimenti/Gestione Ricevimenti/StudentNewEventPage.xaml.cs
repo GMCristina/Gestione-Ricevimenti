@@ -81,11 +81,12 @@ namespace Gestione_Ricevimenti
                 oggetto = Note.Text;
 
                 string inizioMod = inizio.Hours + ":" + inizio.Minutes;
+                string giornoMod = giorno.Day + "/" + giorno.Month + "/" + giorno.Year;
 
                 if (CheckConnection.CheckInternetConnection(this))
                 {
                     ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/richiesta_nuovo_ricevimento.php");
-                    request.SlotRequest(id_professore, id_corso, giorno.ToShortDateString(), inizioMod, durata, oggetto);
+                    request.SlotRequest(id_professore, id_corso, giornoMod, inizioMod, durataMod, oggetto);
                 }
             }
             else

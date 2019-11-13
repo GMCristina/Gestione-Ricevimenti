@@ -40,6 +40,8 @@ namespace Gestione_Ricevimenti
 
         }
 
+
+
         public async void AnnullaClick(object sender, EventArgs args)
         {
 

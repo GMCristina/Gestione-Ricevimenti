@@ -81,6 +81,7 @@ namespace Gestione_Ricevimenti
 
         public async void Refresh(object sender, EventArgs e)
         {
+            ricevimenti.IsRefreshing = true;
             pickerStato.SelectedIndex = 0;
             string id = Application.Current.Properties["id_utente"].ToString();
 
@@ -89,6 +90,7 @@ namespace Gestione_Ricevimenti
                 ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti_prof.php?" + "id_professore=" + id);
                 request.DownloadSlotProf();
             }
+            ricevimenti.IsRefreshing = false;
         }
 
         protected async void Info(object sender, EventArgs e)
@@ -232,7 +234,13 @@ namespace Gestione_Ricevimenti
             {
                 ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/ricevimento.php?id_ricevimento=" + id_ricevimento);
                 request.DownloadEventDetail(false);
+               
+
             }
+
+            Indicator.IsRunning = false;
+            Indicator.IsVisible = false;
+
 
         }
 

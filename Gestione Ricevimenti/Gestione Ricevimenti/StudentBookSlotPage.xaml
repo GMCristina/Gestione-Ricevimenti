@@ -39,6 +39,8 @@
                     SelectionMode="None"
                     IsGroupingEnabled="True"
                     ItemTapped="ItemClick"
+                    IsPullToRefreshEnabled="True"
+                    Refreshing="Refresh"
                 
                    >
                 
@@ -69,6 +71,7 @@
             <ContentView x:Name="popupBookSlot"  BackgroundColor="#C0808080" IsVisible="False" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
                 <ScrollView>
                     <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,1,.5,1"  VerticalOptions="CenterAndExpand" BackgroundColor="White" Margin="20,20" Padding="10, 10, 20,0" Orientation="Vertical" Spacing="10">
+                        <ActivityIndicator x:Name="Indicator" IsRunning="True" IsVisible="True" HorizontalOptions="Center" VerticalOptions="StartAndExpand"/>
                         <Label   Text="Prenota Slot" FontSize="Medium" FontAttributes="Bold" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
                         <Label   Text="Confermi di voler prenotare lo slot selezionato?" HorizontalTextAlignment="Start" FontSize="Small" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" />
                         <Picker  x:Name="pickerCorso" SelectedItem="{Binding id_corso}" ItemDisplayBinding="{Binding nome}" Title="Seleziona il corso: " VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" FontSize="Small"/>

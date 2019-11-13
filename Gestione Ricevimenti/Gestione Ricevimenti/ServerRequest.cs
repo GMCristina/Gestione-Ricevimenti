@@ -158,7 +158,9 @@ namespace Gestione_Ricevimenti
                 ((StudentBookSlotPage)mainPage).fillSpinnerDocente(docenti);
             }
             else
+            {
                 Debug.WriteLine("Nothing retrieved from server.");
+            }
 
 
 
@@ -287,7 +289,7 @@ namespace Gestione_Ricevimenti
                 {
                     case "1":
                         DependencyService.Get<IMessage>().ShortAlert("Richiesta effettuata correttamente");
-                        mainPage.Navigation.PopAsync();
+                        await mainPage.Navigation.PopAsync();
                         break;
                     case "-2":
                         DependencyService.Get<IMessage>().ShortAlert("Richiesta fallita: riprova");

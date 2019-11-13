@@ -84,12 +84,18 @@ namespace Gestione_Ricevimenti
 
         protected async void Refresh(object sender, EventArgs e)
         {
+            ricevimenti.IsRefreshing = true;
             if (CheckConnection.CheckInternetConnection(this))
             {
                 ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/elenco_ricevimenti.php?");
                 request.DownloadEvent();
+                
             }
+
+            ricevimenti.IsRefreshing = false;
         }
+
+
 
         protected async void Info(object sender, EventArgs e)
         {
@@ -112,6 +118,9 @@ namespace Gestione_Ricevimenti
                 ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/ricevimento.php?id_ricevimento=" + id_ricevimento);
                 request.DownloadEventDetail(true);
             }
+
+            Indicator.IsRunning = false;
+            Indicator.IsVisible = false;
 
         }
 
@@ -189,7 +198,6 @@ namespace Gestione_Ricevimenti
 
         }
 
-       
 
     }
 }

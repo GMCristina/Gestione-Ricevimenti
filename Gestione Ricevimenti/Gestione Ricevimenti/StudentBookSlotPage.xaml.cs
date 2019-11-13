@@ -32,10 +32,15 @@ namespace Gestione_Ricevimenti
         {
             base.OnAppearing();
 
+            
+            // pickerDocente.SelectedIndex = 0;
+
             if (CheckConnection.CheckInternetConnection(this))
             {
                 ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/professori.php?");
                 request.DownloadSpinnerDocente();
+
+                
             }
 
         }
@@ -45,15 +50,19 @@ namespace Gestione_Ricevimenti
             id_professore = docenti.First().id_professore;
             nome_cognome_prof = docenti.First().nome_cognome;
 
+
+            pickerDocente.ItemsSource = docenti;
+            pickerDocente.SelectedIndex = 0;
+            pickerDocente.SelectedItem = docenti.First();
+
+            /*
             if (CheckConnection.CheckInternetConnection(this))
             {
                 ServerRequest request1 = new ServerRequest(this, "http://pmapp.altervista.org/ricevimenti_liberi.php?id_professore=" + id_professore);
                 request1.DownloadSlot();
-
-                pickerDocente.ItemsSource = docenti;
-
-                pickerDocente.SelectedIndex = 0;
+   
             }
+            */
 
         }
 
@@ -102,14 +111,18 @@ namespace Gestione_Ricevimenti
 
         private void DocenteSelezionato(object sender, EventArgs e)
         {
-            var picker = sender as Picker;
-
-            id_professore = ((Docente)picker.SelectedItem).id_professore;
-
-            if (CheckConnection.CheckInternetConnection(this))
+            if (pickerDocente.SelectedIndex >= 0)
             {
-                ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/ricevimenti_liberi.php?id_professore=" + id_professore);
-                request.DownloadSlot();
+
+                id_professore = ((Docente)pickerDocente.SelectedItem).id_professore;
+                nome_cognome_prof = ((Docente)pickerDocente.SelectedItem).nome_cognome;
+
+                if (CheckConnection.CheckInternetConnection(this))
+                {
+                    slots.ItemsSource = null;
+                    ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/ricevimenti_liberi.php?id_professore=" + id_professore);
+                    request.DownloadSlot();
+                }
             }
 
         }
@@ -158,11 +171,13 @@ namespace Gestione_Ricevimenti
 
         protected async void Refresh(object sender, EventArgs e)
         {
+            slots.IsRefreshing = true;
             if (CheckConnection.CheckInternetConnection(this))
             {
                 ServerRequest request = new ServerRequest(this, "http://pmapp.altervista.org/ricevimenti_liberi.php?id_professore=" + id_professore);
                 request.DownloadSlot();
             }
+            slots.IsRefreshing = false;
         }
 
         protected async void Info(object sender, EventArgs e)
@@ -227,6 +242,9 @@ namespace Gestione_Ricevimenti
 
                 popupBookSlot.IsVisible = true;
             }
+
+            Indicator.IsRunning = false;
+            Indicator.IsVisible = false;
 
             
 

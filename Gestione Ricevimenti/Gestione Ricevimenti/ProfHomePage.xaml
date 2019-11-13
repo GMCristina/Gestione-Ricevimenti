@@ -43,6 +43,8 @@
                     SelectionMode="None"
                     IsGroupingEnabled="True"
                     ItemTapped="EventDetail"
+                    IsPullToRefreshEnabled="True"
+                    Refreshing="Refresh"
                
                    >
                 <ListView.GroupHeaderTemplate>
@@ -77,7 +79,10 @@
         <ContentView x:Name="popupProfEvent"  BackgroundColor="#C0808080" IsVisible="False" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
             <ScrollView>
                 <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds=".5,1,.5,1"  VerticalOptions="CenterAndExpand" BackgroundColor="White" Margin="20,20" Orientation="Vertical" Spacing="10">
+                   
                     <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Margin="5,15, 5, 0" Orientation="Vertical">
+                        <ActivityIndicator x:Name="Indicator" IsRunning="True" IsVisible="True" HorizontalOptions="Center" VerticalOptions="StartAndExpand"/>
+                        
                         <Label  x:Name="labelStudente" BackgroundColor="{StaticResource Grigio}" Text="Studente : " TextColor="Black" FontSize="Medium" HorizontalTextAlignment="Start" HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand" />
                         <Label x:Name="dataStudente"  FontSize="Medium"  HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" />
 
