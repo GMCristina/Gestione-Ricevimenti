@@ -25,18 +25,11 @@ namespace Gestione_Ricevimenti
                 request.DownloadEvent();
             }
             */
-            
-
-            List<MenuToolbar> MenuItems = new List<MenuToolbar>
-            {
-                new MenuToolbar("iu.png","Info"),
-                new MenuToolbar("iu.png", "Logout")
-            };
+       
 
             InitializeComponent();
 
-            menuItems.ItemsSource = MenuItems;
-            tollbarMenu.IsVisible = false;
+         
        }
 
         protected override void OnAppearing()
@@ -124,32 +117,7 @@ namespace Gestione_Ricevimenti
 
         }
 
-        public void Other(object sender, ItemTappedEventArgs e)
-        {
-            tollbarMenu.IsVisible = true;
-        }
-
-        public async void MenuClick(object sender, ItemTappedEventArgs e)
-        {
-            switch (((MenuToolbar)e.Item).Title)
-            {
-                case "Info":
-                    await Navigation.PushAsync(new InfoPage());
-                    break;
-                case "Logout":
-                    Application.Current.Properties.Remove("id_utente");
-                    Application.Current.Properties.Remove("tipo_utente");
-                    Application.Current.Properties.Remove("matricola");
-                    Application.Current.Properties.Remove("password");
-  
-                    await Navigation.PushAsync(new LoginPage());
-                    Navigation.RemovePage(this); break;
-
-            }
-            tollbarMenu.IsVisible = false;
-
-        }
-
+        
         public void Fine(object sender, ItemTappedEventArgs e)
         {
 

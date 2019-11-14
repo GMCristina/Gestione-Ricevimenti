@@ -99,22 +99,6 @@
             </ScrollView>
         </ContentView>
 
-        <ContentView x:Name="tollbarMenu"  BackgroundColor="#FFFFFFFF" IsVisible="False" VerticalOptions="StartAndExpand" HorizontalOptions="EndAndExpand" AbsoluteLayout.LayoutBounds="1,0,.5,.5" AbsoluteLayout.LayoutFlags="All">
-            <ListView x:Name="menuItems"
-                VerticalOptions="FillAndExpand"
-                HorizontalOptions="FillAndExpand"
-                SelectionMode="None"
-               
-                ItemTapped="MenuClick"
-                     
-                 >
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ImageCell ImageSource="{Binding Source}" Text="{Binding Title}" TextColor="Black" />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </ContentView>
     </AbsoluteLayout>
     
 </ContentPage>

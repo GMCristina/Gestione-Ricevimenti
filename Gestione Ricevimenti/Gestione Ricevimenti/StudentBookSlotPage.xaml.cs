@@ -16,6 +16,7 @@ namespace Gestione_Ricevimenti
         public string id_ricevimento;
         public string id_corso;
         public string nome_cognome_prof;
+        public Corso corso { get; set; }
 
 		 public StudentBookSlotPage ()
 		{
@@ -196,6 +197,9 @@ namespace Gestione_Ricevimenti
         {
 
             string id_studente = Application.Current.Properties["id_utente"].ToString();
+
+            id_corso = ((Corso)pickerCorso.SelectedItem).id_corso;
+
 
             if (id_ricevimento!=null && id_professore!=null && id_corso!=null) {
                 if (CheckConnection.CheckInternetConnection(this))

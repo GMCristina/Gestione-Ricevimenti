@@ -80,6 +80,8 @@ namespace Gestione_Ricevimenti
 
                 oggetto = Note.Text;
 
+                id_corso = ((Corso)pickerCorso.SelectedItem).id_corso;
+
                 string inizioMod = inizio.Hours + ":" + inizio.Minutes;
                 string giornoMod = giorno.Day + "/" + giorno.Month + "/" + giorno.Year;
 
