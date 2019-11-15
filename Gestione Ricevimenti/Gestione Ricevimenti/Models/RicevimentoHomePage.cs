@@ -6,10 +6,12 @@ namespace Gestione_Ricevimenti
 {
     public class RicevimentoHomePage
     {
-        public RicevimentoHomePage(string id_ricevimento, string nome, string cognome, string giorno, string inizio, string fine, string corso, string stato, string oggetto)
+        public RicevimentoHomePage(string id_ricevimento, string nome, string cognome, string snome, string scognome,string giorno, string inizio, string fine, string corso, string stato, string oggetto)
         {
             this.id_ricevimento = id_ricevimento;
             this.nome = nome;
+            this.snome = snome;
+            this.scognome = scognome;
             this.cognome = cognome;
             this.giorno = giorno;
             this.inizio = inizio;
@@ -24,12 +26,15 @@ namespace Gestione_Ricevimenti
         public string id_ricevimento { get; set; }
         public string nome { get; set; }
         public string cognome { get; set; }
+        public string snome { get; set; }
+        public string scognome { get; set; }
         public string giorno { get; set; }
         public string inizio { get; set; }
         public string fine { get; set; }
         public string corso { get; set; }
         public string stato { get; set; }
         public string oggetto { get; set; }
+
 
         public string id_professore { get; set; }
 
@@ -71,6 +76,17 @@ namespace Gestione_Ricevimenti
             {
                 if (!stato.Equals("0"))
                     return nome + " " + cognome;
+                else
+                    return "Nessuno studente";
+            }
+        }
+
+        public string snome_cognome
+        {
+            get
+            {
+                if (!stato.Equals("0"))
+                    return snome + " " + scognome;
                 else
                     return "Nessuno studente";
             }

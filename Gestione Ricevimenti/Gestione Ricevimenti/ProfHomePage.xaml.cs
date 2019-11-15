@@ -342,7 +342,7 @@ namespace Gestione_Ricevimenti
             dataInizio.Text = r.inizio;
             dataFine.Text = r.fine;
 
-            dataStudente.Text = r.nome_cognome;
+            dataStudente.Text = r.snome_cognome;
             dataCorso.Text = r.corso;
            
             dataOggetto.Text = r.oggetto;

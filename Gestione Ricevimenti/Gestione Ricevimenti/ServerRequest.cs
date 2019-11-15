@@ -74,7 +74,7 @@ namespace Gestione_Ricevimenti
                 foreach (KeyValuePair<string, RicevimentoHomePage> elem in result_event)
                 {
                  
-                    events.Add(new RicevimentoHomePage(elem.Value.id_ricevimento, elem.Value.nome, elem.Value.cognome, elem.Value.giorno, elem.Value.inizio, elem.Value.fine, elem.Value.corso, elem.Value.stato, elem.Value.oggetto));
+                    events.Add(new RicevimentoHomePage(elem.Value.id_ricevimento, elem.Value.nome, elem.Value.cognome, elem.Value.snome, elem.Value.scognome,elem.Value.giorno, elem.Value.inizio, elem.Value.fine, elem.Value.corso, elem.Value.stato, elem.Value.oggetto));
                 }
                 ((StudentHomePage)mainPage).fillListStudentHomePage(events);
             }
@@ -99,7 +99,7 @@ namespace Gestione_Ricevimenti
                 foreach (KeyValuePair<string, RicevimentoHomePage> elem in result_event)
                 {
 
-                    events.Add(new RicevimentoHomePage(elem.Value.id_ricevimento, elem.Value.nome, elem.Value.cognome, elem.Value.giorno, elem.Value.inizio, elem.Value.fine, elem.Value.corso, elem.Value.stato, elem.Value.oggetto));
+                    events.Add(new RicevimentoHomePage(elem.Value.id_ricevimento, elem.Value.nome, elem.Value.cognome, elem.Value.snome, elem.Value.scognome,elem.Value.giorno, elem.Value.inizio, elem.Value.fine, elem.Value.corso, elem.Value.stato, elem.Value.oggetto));
                 }
                 if (flag)
                 {
@@ -312,7 +312,7 @@ namespace Gestione_Ricevimenti
             public async void DownloadSlotProf()
             {
                
-
+            
                 var response = await _client.GetAsync(URL);
                 if (response.IsSuccessStatusCode)
                 {
@@ -323,7 +323,7 @@ namespace Gestione_Ricevimenti
                     foreach (KeyValuePair<string, RicevimentoHomePage> elem in result_event)
                     {
 
-                        events.Add(new RicevimentoHomePage(elem.Value.id_ricevimento, elem.Value.nome, elem.Value.cognome, elem.Value.giorno, elem.Value.inizio, elem.Value.fine, elem.Value.corso, elem.Value.stato, elem.Value.oggetto));
+                        events.Add(new RicevimentoHomePage(elem.Value.id_ricevimento, elem.Value.nome, elem.Value.cognome, elem.Value.snome, elem.Value.scognome, elem.Value.giorno, elem.Value.inizio, elem.Value.fine, elem.Value.corso, elem.Value.stato, elem.Value.oggetto));
                     }
                    ((ProfHomePage)mainPage).fillListProfHomePage(events,true);
                    
